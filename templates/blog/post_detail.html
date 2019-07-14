@@ -1,0 +1,117 @@
+{% extends 'tour/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+       <a href="{% url 'blog:post_edit' pk=post.pk %}" class="top-menu"><i class="fas fa-edit"></i></a>
+    {% endblock %}
+{% block content %}
+   
+              
+          
+<div class="container-fluid">
+   
+<!--- Jumbotron -->
+    <div class="jumbotron row d-flex  justify-content-center text-center ">
+        <div class="col-sm-12 col-md-10 col-lg-3 runner">
+     
+            <div class="row">
+                <hr class="light">
+            </div>
+            <div class="row">
+                  <div class="title2">
+     המלצות
+                  </div>
+    
+            </div>
+            
+            
+
+
+            
+            
+        </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
+    
+        
+        <div class="col-sm-12 col-md-12 col-lg-8">
+        
+                <div class="row main_text">
+                <div class="col-12">
+         {% if post.published_date %}
+                
+                
+                    <div class="text-left mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                    
+                     
+                     {% else %}
+            <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
+            
+            {% endif %}
+             </div>
+            {% if post.published_date %}
+    <div class="date">
+        {{ post.published_date }}
+    </div>
+{% endif %}
+            
+            
+            
+            
+            
+                      {% if user.is_authenticated %}
+                     <div class="col-12">
+                             <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><i class="fas fa-edit"></i></a>
+                             <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>
+                    </div>
+                    {% endif %}
+                     <div class="col-12">
+                    <h2>{{ post.title }}</h2>
+                    </div>
+         <div class="col-12">
+                   <p>{{ post.text|linebreaksbr }}</p>
+                    </div>
+        
+        
+           <hr class="short">
+            </div> <!-- "row main_text"  -->     
+            
+            <hr>
+             <div class="row main_text">
+             <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">Add comment</a>
+{% for comment in post.comments.all %}
+{% if user.is_authenticated or comment.approved_comment %}
+    <div class="row comment">
+     <div class="col-12">
+        <div class="date">{{ comment.created_date|date:"d.m.Y" }}</div>
+         {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'blog:comment_remove' pk=comment.pk %}"><i class="fas fa-trash"></i></a>
+                <a class="btn btn-default" href="{% url 'blog:comment_approve' pk=comment.pk %}"><i class="fa fa-check"></i></a>
+            {% endif %}
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+{% empty %}
+    <p>אין תגובות</p>
+{% endfor %}
+</div>
+          </div>  <!-- col-sm-12 col-md-12 col-lg-8 -->             
+          
+<!--- Our tours row -->
+
+          
+            
+<!--- Close previous div -->
+        </div><!-- jumbotron row  text-center .d-none .d-sm-block -->
+    </div><!-- container-fluid -->
+<!--- Welcome Section -->
+
+    
+
+
+
+
+
+{% endblock %}
