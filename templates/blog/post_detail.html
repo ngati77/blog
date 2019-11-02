@@ -71,8 +71,37 @@
                     </div>
         
         
-           <hr class="short">
             </div> <!-- "row main_text"  -->     
+            
+             <div class="col-12">
+                {% for phrase in post.phrases.all %}
+                    {% if phrase.check_title is rue %}
+                        <h3>{{ phrase.title }}</h3>
+                    {% endif %}
+                
+                    {% if phrase.check_text1 is rue %}
+                        <p>{{ phrase.text1 }}</p>
+                    {% endif %}
+                
+                    {% if phrase.image_checkbox is True %}
+                         <a class="img" href="#" data-image-id="" data-toggle="modal" data-title=""
+                         data-image="{{phrase.image.url}}"
+                         data-target="#image-post">
+                         <img class="img-thumbnail"
+                             src="{{phrase.image.url}}"
+                             alt="">
+                        </a>
+                    
+                    {% endif %}
+                
+                    {% if phrase.check_text2 is rue %}
+                        <p>{{ phrase.text2 }}</p>
+                    {% endif %}
+                {% empty %}
+                <p>אין תוכן</p>
+                {% endfor %}
+            
+            </div>
             
             <hr>
              <div class="row main_text">

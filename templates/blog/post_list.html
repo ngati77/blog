@@ -1,7 +1,7 @@
 {% extends 'tour/base.html' %}
 {% load static %}
 {% block head %}
-        <title>Django Girls blog</title>
+        <title>קיימברידג' בעברית הבלוג</title>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     {% endblock %}
 {% block content %}
@@ -48,6 +48,16 @@
                      <div class="col-12">
                     <p>{{ post.text|linebreaksbr }}</p>
                     </div>
+                     <div class="col-12">
+                            <a class="post_img" href="#" data-image-id="" data-toggle="modal" data-title=""
+                       data-image="{{post.image.url}}"
+                       data-target="#image-post">
+                        <img class="img-thumbnail"
+                             src="{{post.image.url}}"
+                             alt="">
+                    </a>
+                    </div>
+                    
                     <div class="col-12">
                     <a href="{% url 'blog:post_detail' pk=post.pk %}">מספר תגובות: {{ post.approved_comments.count }}</a>
                     </div>
