@@ -6,23 +6,14 @@
     {% endblock %}
 {% block content %}
    
-              
-          
 <div class="container-fluid">
    
 <!--- Jumbotron -->
     <div class="jumbotron row d-flex  justify-content-center text-center ">
         <div class="col-sm-12 col-md-10 col-lg-3 runner">
      
-            <div class="row">
-                <hr class="light">
-            </div>
-            <div class="row">
-                  <div class="title2">
-     המלצות
-                  </div>
-    
-            </div>
+            {% include 'blog/blog_side_bar.html' %}
+                
             
             
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
@@ -46,7 +37,7 @@
                             <h2><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
                     </div>
                      <div class="col-12">
-                    <p>{{ post.text|linebreaksbr }}</p>
+                    {{ post.text |linebreaks |urlize }}
                     </div>
                      <div class="col-12">
                             <a class="post_img" href="#" data-image-id="" data-toggle="modal" data-title=""
@@ -78,8 +69,6 @@
         </div><!-- jumbotron row  text-center .d-none .d-sm-block -->
     </div><!-- container-fluid -->
 <!--- Welcome Section -->
-
-    
 
 
 

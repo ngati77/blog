@@ -5,29 +5,14 @@
        <a href="{% url 'blog:post_edit' pk=post.pk %}" class="top-menu"><i class="fas fa-edit"></i></a>
     {% endblock %}
 {% block content %}
-   
-              
           
 <div class="container-fluid">
    
 <!--- Jumbotron -->
-    <div class="jumbotron row d-flex  justify-content-center text-center ">
+    <div class="jumbotron row d-flex  justify-content-center text-right ">
         <div class="col-sm-12 col-md-10 col-lg-3 runner">
      
-            <div class="row">
-                <hr class="light">
-            </div>
-            <div class="row">
-                  <div class="title2">
-     המלצות
-                  </div>
-    
-            </div>
-            
-            
-
-
-            
+                {% include 'blog/blog_side_bar.html'  %}
             
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
@@ -47,11 +32,7 @@
             
             {% endif %}
              </div>
-            {% if post.published_date %}
-    <div class="date">
-        {{ post.published_date }}
-    </div>
-{% endif %}
+    
             
             
             
@@ -66,8 +47,8 @@
                      <div class="col-12">
                     <h2>{{ post.title }}</h2>
                     </div>
-         <div class="col-12">
-                   <p>{{ post.text|linebreaksbr }}</p>
+         <div class="col-12"><p>
+                   {{ post.text |linebreaks |urlize}}</p>
                     </div>
         
         
@@ -75,14 +56,24 @@
             
              <div class="col-12">
                 {% for phrase in post.phrases.all %}
-                    {% if phrase.check_title is rue %}
+                    {% if user.is_authenticated %}
+                        <div class="col-12">
+                        <a class="btn btn-default" href="{% url 'blog:phrase_edit' pk=phrase.pk %}"><i class="fas fa-edit"></i>ערוך פסקה תחתונה</a>
+                        <!--<a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>-->
+                    </div>
+                    {% endif %}
+                    {% if phrase.check_title is True %}
                         <h3>{{ phrase.title }}</h3>
                     {% endif %}
                 
-                    {% if phrase.check_text1 is rue %}
-                        <p>{{ phrase.text1 }}</p>
+                    {% if phrase.text1_checkbox is True %}
+                        {% if phrase.text1_html_style is True %}
+                            {{ phrase.text1 |safe}}
+                        {% else %}
+                            {{ phrase.text1 |linebreaks |urlize }}
+                        {% endif %}
                     {% endif %}
-                
+
                     {% if phrase.image_checkbox is True %}
                          <a class="img" href="#" data-image-id="" data-toggle="modal" data-title=""
                          data-image="{{phrase.image.url}}"
@@ -92,15 +83,26 @@
                              alt="">
                         </a>
                     
+                    
                     {% endif %}
                 
-                    {% if phrase.check_text2 is rue %}
-                        <p>{{ phrase.text2 }}</p>
+                    {% if phrase.text2_checkbox is True %}
+                        {% if phrase.text2_html_style is True %}
+                            {{ phrase.text2 |safe}}
+                        {% else %}
+                            {{ phrase.text2 |linebreaks |urlize }}
+                        {% endif %}
                     {% endif %}
                 {% empty %}
+
                 <p>אין תוכן</p>
                 {% endfor %}
-            
+                <p> הוסף פיסקה</p>
+                {% if user.is_authenticated %}
+
+                <a class="btn btn-default" href="{% url 'blog:phrase_new' pk=post.pk %}"><i class="fas fa-edit"></i>הוסף פסקה חדשה</a>
+                {% endif %}
+
             </div>
             
             <hr>

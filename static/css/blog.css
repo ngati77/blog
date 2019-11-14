@@ -53,3 +53,10 @@ h1, h2, h3, h4 {
    width:40%;
     
 }
+.side_nav_link[data-toggle].collapsed:after {
+    content: "▾";
+}
+
+.side_nav_link[data-toggle]:not(.collapsed):after {
+    content: "▴";
+}

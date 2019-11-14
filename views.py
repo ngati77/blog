@@ -1,10 +1,9 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Comment, Phrase
+from .forms import PostForm, CommentForm, PhraseForm
 
 from django.contrib.auth.decorators import login_required
-
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -27,7 +26,20 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+@login_required
+def phrase_new(request, pk):
+    post = get_object_or_404(Post, pk=pk)
 
+    if request.method == "POST":
+        form = PhraseForm(request.POST, request.FILES)
+        if form.is_valid():
+            phrase = form.save(commit=False)
+            phrase.post = post
+            phrase.save()
+            return redirect('blog:post_detail', pk=post.pk)
+    else:
+        form = PhraseForm()
+    return render(request, 'blog/phrase_edit.html', {'form': form})
 @login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -42,6 +54,25 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+@login_required
+def phrase_edit(request, pk):
+    phrase = get_object_or_404(Phrase, pk=pk)
+    if request.method == "POST":
+        form = PhraseForm(request.POST, request.FILES,instance=phrase)
+        print('debug1')
+        if form.is_valid():
+            print('debug2')
+
+            phrase = form.save(commit=False)
+            print('debug3')
+            phrase.save()
+            print('debug4')
+            return redirect('blog:post_detail', pk=phrase.post.pk)
+    else:
+        print('hello')
+        form = PhraseForm(instance=phrase)
+    return render(request, 'blog/phrase_edit.html', {'form': form})
 
 @login_required
 def post_draft_list(request):

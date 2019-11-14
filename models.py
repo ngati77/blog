@@ -29,8 +29,10 @@ class Phrase(models.Model):
     image_checkbox  = models.BooleanField(default=False)
     image           = models.ImageField(blank = True, null = True, upload_to = 'Post/%Y/%m/')
     text1_checkbox  = models.BooleanField(default=False)
+    text1_html_style  = models.BooleanField(default=False)
     text1           = models.TextField()
     text2_checkbox  = models.BooleanField(default=False)
+    text2_html_style  = models.BooleanField(default=False)
     text2           = models.TextField()
     order           = models.IntegerField(default=0)
     
