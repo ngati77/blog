@@ -19,34 +19,26 @@
         
         <div class="col-sm-12 col-md-12 col-lg-8">
         
-                <div class="row main_text">
-                <div class="col-12">
-         {% if post.published_date %}
-                
-                
-                    <div class="text-left mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
-                    
-                     
-                     {% else %}
-            <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
-            
-            {% endif %}
-             </div>
-    
-            
-            
-            
-            
-            
+            <div class="row main_text">
+         
                       {% if user.is_authenticated %}
                      <div class="col-12">
                              <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><i class="fas fa-edit"></i></a>
                              <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>
                     </div>
                     {% endif %}
-                     <div class="col-12">
+                     <div class="col-12 blog_name">
                     <h2>{{ post.title }}</h2>
+                    <hr>
                     </div>
+                    <div class="col-12">
+                        {% if post.published_date %}
+                                   <div class="text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                                    {% else %}
+                           <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
+                           
+                           {% endif %}
+                            </div>
          <div class="col-12"><p>
                    {{ post.text |linebreaks |urlize}}</p>
                     </div>
