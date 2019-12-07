@@ -25,8 +25,9 @@
 h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
 }
-.blog_name h2{ 
+.blog_name h2, .blog_name h1, .blog_name h3{ 
     font-family:'Gevert','Regular'!important;
+    color:#124789
    
 
 }
@@ -57,6 +58,14 @@ h1, h2, h3, h4 {
     color: #000000;
 }
 
+.post_column{
+    padding:20px;
+    margin:5px;
+    background:#f1f1f1;
+    margin-bottom:  25px;
+    margin-top:  25px;
+}
+
 .comment {
     margin: 20px 0px 20px 20px;
 }
@@ -65,7 +74,7 @@ h1, h2, h3, h4 {
     margin-right:  5px;
 }
 .post_img img{
-   width:40%;
+   width:80%;
 }
 .phrase_img img{
     width:100%;
