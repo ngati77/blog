@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="row">
         <div class="title2" >
 בלוגים לפי נושאים
@@ -6,12 +8,16 @@
   <div class="row ">
       <hr class="light">
   </div>
-
-<ul class="nav flex-column flex-nowrap">
-                        <li class="nav-item"><a class="nav-link" href="#"> קצת עלינו</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link side_nav_link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">טיולים בבריטניה</a>
-                            <div class="collapse" id="submenu1" aria-expanded="false">
+  
+<ul class="nav nav_blog flex-column flex-nowrap">
+    <li class="nav-item "><a class="nav-link" href="#"> קצת עלינו</a></li>
+    {% for post in latest_posts %}
+    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_detail' pk=post.pk %}"><img width="20%" src="{{post.image.url}}"/> {{post.title}}</a></li>
+    
+    {% endfor %}
+    <li class="nav-item ">
+        <a class="nav-link side_nav_link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">טיולים בבריטניה</a>
+        <div class="collapse" id="submenu1" aria-expanded="false">
                                 <ul class="flex-column pl-2 nav">
                                     <li class="nav-item"><a class="nav-link py-0" href="#">סקוטלנד</a></li>
                                     <li class="nav-item">
@@ -42,8 +48,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#">טיולים באירופה</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Export</a></li>
-                    </ul>
+        </div>
+    </li>
+    <li class="nav-item "><a class="nav-link" href="#">טיולים באירופה</a></li>
+    <li class="nav-item "><a class="nav-link" href="#">Export</a></li>
+</ul>

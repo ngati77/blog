@@ -23,17 +23,21 @@ class Post(models.Model):
     
 
 class Phrase(models.Model):
+    
     post            = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='phrases')
-    title_checkbox  = models.BooleanField(default=False)
-    title           = models.CharField(max_length=200)
+    # ‎title_checkbox  = models.BooleanField(default=False)
+    title           = models.CharField(max_length=200,blank = True, null = True)
     image_checkbox  = models.BooleanField(default=False)
-    image           = models.ImageField(blank = True, null = True, upload_to = 'Post/%Y/%m/')
-    text1_checkbox  = models.BooleanField(default=False)
+    image_num       = models.IntegerField(default=1, blank=True, null=True)
+    image           = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
+    image2          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
+    image3          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
+    # text1_checkbox  = models.BooleanField(default=False)
     text1_html_style  = models.BooleanField(default=False)
-    text1           = models.TextField()
-    text2_checkbox  = models.BooleanField(default=False)
+    text1           = models.TextField(blank = True, null = True)
+    # text2_checkbox  = models.BooleanField(default=False)
     text2_html_style  = models.BooleanField(default=False)
-    text2           = models.TextField()
+    text2           = models.TextField(blank = True, null = True)
     order           = models.IntegerField(default=0)
     
     class Meta:

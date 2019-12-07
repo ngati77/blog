@@ -15,7 +15,9 @@
     font-size: 36pt;
     text-decoration: none;
 }
-
+.nav_blog{
+    padding-right: 2px!important;
+}
 .content {
     margin-left: 40px;
 }
@@ -58,11 +60,16 @@ h1, h2, h3, h4 {
 .comment {
     margin: 20px 0px 20px 20px;
 }
-
+.comment_space {
+    padding-right: 5px;
+    margin-right:  5px;
+}
 .post_img img{
    width:40%;
-    
 }
+.phrase_img img{
+    width:100%;
+ }
 .side_nav_link[data-toggle].collapsed:after {
     content: "▾";
 }

@@ -14,7 +14,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'text',)
+        fields = ('title', 'text', 'image',)
         
 
 class CommentForm(forms.ModelForm):
@@ -27,6 +27,8 @@ class PhraseForm(forms.ModelForm):
 
     class Meta:
         model = Phrase
-        fields = ('title_checkbox', 'title','text1_checkbox','text1_html_style','text1','image_checkbox','image','text2_checkbox','text2_html_style','text2','order')
+        fields = ('title','text1_html_style','text1',
+                  'image_checkbox', 'image_num', 'image', 'image2', 'image3', 
+                  'text2_html_style', 'text2', 'order')
 
     

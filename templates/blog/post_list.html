@@ -30,7 +30,7 @@
             <div class="row main_text">
             {% for post in posts %}
                 <div class="col-12">
-                    <div class="text-left mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                    <div class="text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
                      </div>
                      
                      <div class="col-12 blog_name">
@@ -52,12 +52,10 @@
                     <div class="col-12">
                     <a href="{% url 'blog:post_detail' pk=post.pk %}">מספר תגובות: {{ post.approved_comments.count }}</a>
                     </div>
-        
-        
-        
+                    <hr class="short">
+                
         {% endfor %}
         
-           <hr class="short">
             </div> <!-- "row main_text"  -->     
           </div>  <!-- col-sm-12 col-md-12 col-lg-8 -->             
           
