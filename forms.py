@@ -28,7 +28,7 @@ class PhraseForm(forms.ModelForm):
     class Meta:
         model = Phrase
         fields = ('title','text1_html_style','text1',
-                  'image_checkbox', 'image_num', 'image', 'image2', 'image3', 
-                  'text2_html_style', 'text2', 'order')
+                  'image_num', 'image', 'image2', 'image3', 
+                  'order')
 
     

@@ -25,26 +25,23 @@ class Post(models.Model):
 class Phrase(models.Model):
     
     post            = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='phrases')
-    # ‎title_checkbox  = models.BooleanField(default=False)
     title           = models.CharField(max_length=200,blank = True, null = True)
-    image_checkbox  = models.BooleanField(default=False)
+    text1_html_style  = models.BooleanField(default=False)
+    text1           = models.TextField(blank = True, null = True)
     image_num       = models.IntegerField(default=1, blank=True, null=True)
     image           = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
     image2          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
-    image3          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
-    # text1_checkbox  = models.BooleanField(default=False)
-    text1_html_style  = models.BooleanField(default=False)
-    text1           = models.TextField(blank = True, null = True)
-    # text2_checkbox  = models.BooleanField(default=False)
-    text2_html_style  = models.BooleanField(default=False)
-    text2           = models.TextField(blank = True, null = True)
+    image3          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')    
     order           = models.IntegerField(default=0)
     
     class Meta:
         ordering = ['order']
         
     def __str__(self):
-        return (str(self.post) + " " + str(self.order))
+        if not self.title:
+            return (str(self.post) +  "-" + str(self.order))
+        else:
+            return (str(self.post) + "-" + self.title + "-" + str(self.order))
     
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')

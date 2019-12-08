@@ -111,18 +111,6 @@
                   {% endif %}
                 </div>
                     
-                   
-                
-                    {% if phrase.text2 %}
-                    <div class="col-12">
-                        {% if phrase.text2_html_style is True %}
-                            {{ phrase.text2 |safe}}
-                        {% else %}
-                            {{ phrase.text2 |linebreaks |urlize }}
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                {% empty %}
                 <div class="col-12">
 
                     <p>אין תוכן</p>

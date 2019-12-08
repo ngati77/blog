@@ -24,7 +24,9 @@
             </div>
             <div class="row main_text">
             <div class="col-sm-12 col-md-6">
-            {% for post in posts_even %}
+            {% for post_even_or_odd in posts %}
+            {% for post in post_even_or_odd %}
+
             <div class="col-12 post_column">
 
                 <div class="col-12 blog_name text-right">
@@ -55,37 +57,8 @@
         {% endfor %}
         </div>
         <div class="col-sm-12 col-md-6">
-        {% for post in posts_odd %}
-
+        {% endfor %}  
         
-        <div class="col-12 post_column">
-
-            <div class="col-12 blog_name text-right">
-                    <h2><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-                </div>
-                <div class="col-12 text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
-                <div class="col-12">
-                    <a class="post_img" href="#" data-image-id="" data-toggle="modal" data-title=""
-                    data-image="{{post.image.url}}"
-                    data-target="#image-post">
-                    <img class="img-thumbnail"
-                    src="{{post.image.url}}"
-                    alt="">
-                </a>
-            </div>
-        
-            <div class="col-12">
-            {{ post.text |linebreaks |urlize }}
-            </div>
-            <!--
-
-                    <div class="col-12">
-                        <a href="{% url 'blog:post_detail' pk=post.pk %}">מספר תגובות: {{ post.approved_comments.count }}</a>
-                    </div>
-                -->
-        </div>
-                
-        {% endfor %}
         </div>
         
             </div> <!-- "row main_text"  -->     
