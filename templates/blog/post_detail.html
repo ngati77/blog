@@ -48,6 +48,7 @@
             
             
                 {% for phrase in post.phrases.all %}
+
                     {% if user.is_authenticated %}
                         <div class="col-12">
                         <a class="btn btn-default" href="{% url 'blog:phrase_edit' pk=phrase.pk %}"><i class="fas fa-edit"></i>ערוך פסקה תחתונה</a>
@@ -69,8 +70,8 @@
                             {{ phrase.text1 |linebreaks |urlize }}
                         {% endif %}
                     </div>
-
                     {% endif %}
+
                     <div class="row">
                     {% if phrase.image.url is not null %}
                         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -83,8 +84,8 @@
                                 alt="">
                             </a>
                         </div>
-
                     {% endif %}
+
                         {% if phrase.image2.url is not null %}
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
@@ -95,8 +96,8 @@
                             alt="">
                     </a>
                     </div>
-
                     {% endif %}
+
                     {% if phrase.image3.url is not null %}
                     <div class="col-sm-12 col-md-6 col-lg-6 ">
                         <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
@@ -107,23 +108,15 @@
                         alt="">
                     </a>
                     </div>
-
                   {% endif %}
                 </div>
                     
-                <div class="col-12">
-
-                    <p>אין תוכן</p>
-                </div>
-
                 {% endfor %}
                 {% if user.is_authenticated %}
 
                 <a class="btn btn-default" href="{% url 'blog:phrase_new' pk=post.pk %}"><i class="fas fa-edit"></i>הוסף פסקה חדשה</a>
                 {% endif %}
 
-            
-            
             <hr>
             <div class="row main_text">
                 <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">הוסף תגובה</a>
