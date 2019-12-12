@@ -39,6 +39,18 @@
                            
                            {% endif %}
                     </div>
+                    <div class="col-8"><p>
+
+                    <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
+                    data-image="{{post.image.url}}"
+                    data-target="#image-post">
+                    <img class="img-thumbnail"
+                        src="{{post.image.url}}"
+                        alt="">
+                </a>
+            </div>
+
+
                     <div class="col-12"><p>
                    {{ post.text |linebreaks |urlize}}</p>
                     </div>
@@ -56,7 +68,7 @@
                         </div>
                     {% endif %}
                     {% if phrase.title %}
-                    <div class="col-12">
+                    <div class="col-12 blog_name">
                         <h3>{{ phrase.title }}</h3>
                     </div>
                     {% endif %}

@@ -4,12 +4,22 @@ from django.utils import timezone
 # Create your models here.
 
 class Post(models.Model):
+    POST_TYPE = (
+    ('p', 'Post'),
+    ('w', 'Writer'),
+    ('h', 'Home'),
+)
     author          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title           = models.CharField(max_length=200)
     text            = models.TextField()
     created_date    = models.DateTimeField(default=timezone.now)
     image           = models.ImageField(blank = True, null = True, upload_to = 'Post/%Y/%m/')
     published_date  = models.DateTimeField(blank=True, null=True)
+    type = models.CharField(
+            max_length=1, 
+            choices=POST_TYPE,
+            default='p',
+    )
 
     def publish(self):
         self.published_date = timezone.now()

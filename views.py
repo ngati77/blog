@@ -17,8 +17,8 @@ def group_required(*group_names):
    return user_passes_test(in_groups)
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]]})
+    posts = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('published_date')
+    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'האחרונים שלנו'})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -89,8 +89,9 @@ def phrase_edit(request, pk):
 @login_required
 @group_required('blog_admin')
 def post_draft_list(request):
-    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'blog/post_draft_list.html', {'posts': posts})
+    posts = Post.objects.filter(published_date__isnull=True,type='p').order_by('created_date')
+    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'טיוטות'})
+
 
 @login_required
 @group_required('blog_admin')
@@ -105,6 +106,10 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('blog:post_list')
+
+def post_writers(request):
+    posts = Post.objects.filter(published_date__isnull=False,type='w').order_by('created_date')
+    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'קצת עלינו'})
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)

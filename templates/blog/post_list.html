@@ -19,7 +19,7 @@
         <div class="col-sm-12 col-md-12 col-lg-8">
             <div class="jumbotron row d-flex  justify-content-center text-center ">
                     <div class="col-12 blog_name">
-                        <h1><a href="#">האחרונים שלנו</a></h1>
+                        <h1><a href="#">{{page_title}}</a></h1>
                     </div>
             </div>
             <div class="row main_text">
@@ -32,7 +32,9 @@
                 <div class="col-12 blog_name text-right">
                         <h3><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
                     </div>
+                    {% if post.published_date %}
                     <div class="col-12 text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                    {% endif %}
                     <div class="col-12">
                         <a class="post_img" href="#" data-image-id="" data-toggle="modal" data-title=""
                         data-image="{{post.image.url}}"

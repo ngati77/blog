@@ -13,7 +13,8 @@
     {% if user.is_authenticated %}
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_draft_list' %}">טיוטות</a></li>
     {% endif %}
-    <li class="nav-item "><a class="nav-link" href="#"> קצת עלינו</a></li>
+    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_writers' %}"> קצת עלינו</a></li>
+    <li class="nav-item "><a class="nav-link" href="#">בלוגים אחרונים</a></li>
     {% for post in latest_posts %}
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_detail' pk=post.pk %}"><img width="20%" src="{{post.image.url}}"/> {{post.title}}</a></li>
     
