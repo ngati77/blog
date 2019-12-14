@@ -16,18 +16,22 @@
                 
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
-        <div class="col-sm-12 col-md-12 col-lg-8">
-            <div class="jumbotron row d-flex  justify-content-center text-center ">
-                    <div class="col-12 blog_name">
-                        <h1><a href="#">{{page_title}}</a></h1>
-                    </div>
+        <div class="col-sm-12 col-md-12 col-lg-8 post_main">
+            <div class="col-12 blog_name">
+                <h1><a href="#">{{page_title}}</a></h1>
             </div>
-            <div class="row main_text">
-            <div class="col-sm-12 col-md-6">
-            {% for post_even_or_odd in posts %}
-            {% for post in post_even_or_odd %}
+            <div class="row ">
+                {% if user.is_authenticated %}
+                <div class="col-12">
+                            <a class="btn btn-default" href="{% url 'blog:post_new' %}"><i class="far fa-plus-square"></i></a>
+                </div>
+                {% endif %}
+           
+                {% for post_even_or_odd in posts %}
+                <div class="col-sm-12 col-md-6">
+                    {% for post in post_even_or_odd %}
 
-            <div class="col-12 post_column">
+                    <div class="row post_column">
 
                 <div class="col-12 blog_name text-right">
                         <h3><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
@@ -35,6 +39,7 @@
                     {% if post.published_date %}
                     <div class="col-12 text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
                     {% endif %}
+                    {% if post.image %}
                     <div class="col-12">
                         <a class="post_img" href="#" data-image-id="" data-toggle="modal" data-title=""
                         data-image="{{post.image.url}}"
@@ -43,8 +48,9 @@
                         src="{{post.image.url}}"
                         alt="">
                     </a>
-                </div>
-            
+                    </div>
+                {% endif %}
+
                 <div class="col-12">
                 {{ post.text |linebreaks |urlize }}
                 </div>
@@ -54,16 +60,14 @@
                         <a href="{% url 'blog:post_detail' pk=post.pk %}">מספר תגובות: {{ post.approved_comments.count }}</a>
                     </div>
                 -->
-            </div>
+                    </div> <!-- "row post_column"  --> 
                 
-        {% endfor %}
-        </div>
-        <div class="col-sm-12 col-md-6">
-        {% endfor %}  
+                    {% endfor %}
+                </div> <!-- "col-sm-12 col-md-6"  --> 
+                {% endfor %}  
         
-        </div>
         
-            </div> <!-- "row main_text"  -->     
+            </div> <!-- "row "  -->     
           </div>  <!-- col-sm-12 col-md-12 col-lg-8 -->             
           
 <!--- Our tours row -->

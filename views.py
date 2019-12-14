@@ -29,7 +29,7 @@ def post_detail(request, pk):
 @group_required('blog_admin')
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -89,7 +89,7 @@ def phrase_edit(request, pk):
 @login_required
 @group_required('blog_admin')
 def post_draft_list(request):
-    posts = Post.objects.filter(published_date__isnull=True,type='p').order_by('created_date')
+    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'טיוטות'})
 
 
@@ -109,7 +109,9 @@ def post_remove(request, pk):
 
 def post_writers(request):
     posts = Post.objects.filter(published_date__isnull=False,type='w').order_by('created_date')
-    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'קצת עלינו'})
+    return render(request, 'blog/post_detail.html', {'post': posts[0],'page_title':'על הכותבים'})
+
+    # return render(request, 'blog/post_list.html', {'posts': [posts[0],'page_title':'קצת עלינו'})
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)

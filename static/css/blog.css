@@ -86,3 +86,25 @@ h1, h2, h3, h4 {
 .side_nav_link[data-toggle]:not(.collapsed):after {
     content: "▴";
 }
+
+.post_main{
+    padding-right:0px!important;
+    padding-left:0px!important;
+    margin:0px!important;
+
+
+}
+
+@media (max-width: 768px) {
+    .post_column{
+        padding:0px;
+        margin:0px;
+        background:#f1f1f1;
+        margin-bottom:  25px;
+        margin-top:  25px;
+    }
+    
+    .post_img img{
+        width:100%;
+     }
+}

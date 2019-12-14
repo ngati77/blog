@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row main_text">
-                <form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="save btn btn-default">Save</button>
                 </form>

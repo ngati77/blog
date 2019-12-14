@@ -66,5 +66,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class Subscribed(models.Model):
+
+    first_name       = models.CharField(max_length=200)
+    last_name        = models.CharField(max_length=200)
+    email            = models.EmailField(blank=True, default="")
     
-   
+    def __str__(self):
+        return self.email

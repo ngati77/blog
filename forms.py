@@ -7,7 +7,7 @@ Created on Fri Jul 12 23:04:42 2019
 
 from django import forms
 
-from .models import Post, Comment, Phrase
+from .models import Post, Comment, Phrase, Subscribed
 
 
 class PostForm(forms.ModelForm):
@@ -30,5 +30,13 @@ class PhraseForm(forms.ModelForm):
         fields = ('title','text1_html_style','text1',
                   'image_num', 'image', 'image2', 'image3', 
                   'order')
+
+class SubscribedForm(forms.ModelForm):
+
+    class Meta:
+        model = Subscribed
+        fields = ('first_name', 'last_name','email')
+
+                  
 
     
