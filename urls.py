@@ -22,6 +22,8 @@ urlpatterns = [
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('phrase/<int:pk>/edit/', views.phrase_edit, name='phrase_edit'),
     path('phrase/<int:pk>/new/', views.phrase_new, name='phrase_new'),
+    
+    path('subscribed', views.subscribed_view, name='subscribed_view'),
 
 
 ]

@@ -22,6 +22,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author', 'text',)
+        labels = {
+        "author": "שם ",
+        "text": "הערה"
+    }
+
 
 class PhraseForm(forms.ModelForm):
 
@@ -36,6 +41,11 @@ class SubscribedForm(forms.ModelForm):
     class Meta:
         model = Subscribed
         fields = ('first_name', 'last_name','email')
+        labels = {
+        "first_name": "שם פרטי",
+        "last_name": "שם משפחה",
+        "email": "אמייל"
+    }
 
                   
 

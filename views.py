@@ -1,7 +1,7 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment, Phrase
-from .forms import PostForm, CommentForm, PhraseForm
+from .forms import PostForm, CommentForm, PhraseForm, SubscribedForm
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -125,6 +125,17 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form})
+
+def subscribed_view(request):
+    if request.method == "POST":
+        form = SubscribedForm(request.POST)
+        if form.is_valid():
+            subscribed = form.save(commit=False)
+            subscribed.save()
+            return redirect('blog:post_list')
+    else:
+        form = SubscribedForm()
+    return render(request, 'blog/subscribed.html', {'form': form})
 
 @login_required
 @group_required('blog_admin')

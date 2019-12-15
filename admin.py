@@ -3,30 +3,9 @@ from django.contrib import admin
 # Register your models here.
 from .models import Post, Comment, Phrase, Subscribed
 
-
-
-
 class PhraseInline(admin.TabularInline):
     model = Phrase
     extra = 3
-    
-# class PhraseAdmin(admin.ModelAdmin):
-            
-#     fieldsets = [
-        
-#         ('Date information', {'fields': ['trip_date']}),
-#         (None,               {'fields': ['post']}),
-#         (None,               {'fields': ['title']}),
-#         (None,               {'fields': ['image']}),
-#         (None,               {'fields': ['text1_html_style']}),
-#         (None,               {'fields': ['text1']}),
-#         (None,               {'fields': ['image']}),
-#         (None,               {'fields': ['image2']}),
-#         (None,               {'fields': ['image3']}),
-#         (None,               {'fields': ['image_num']}),
-#         (None,               {'fields': ['order']}),
-       
-#     ]
     
 class PostAdmin(admin.ModelAdmin):
     inlines         = [PhraseInline]
