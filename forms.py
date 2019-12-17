@@ -23,7 +23,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('author', 'text',)
         labels = {
-        "author": "שם ",
+        "author": "שם",
         "text": "הערה"
     }
 

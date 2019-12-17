@@ -131,6 +131,7 @@
                 {% endif %}
 
             <hr>
+            {% if ShowComments %}
             <div class="row main_text">
                 <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">הוסף תגובה</a>
             {% for comment in post.comments.all %}
@@ -147,13 +148,15 @@
                         {{ comment.text|linebreaks|urlize }}
                     </div>
                 </div>
-    {% endif %}
+                {% endif %}
     
     
     {% empty %}
         <p>אין תגובות</p>
     {% endfor %}
             </div>
+            {% endif %}
+
         </div>  <!-- col-sm-12 col-md-12 col-lg-8 -->             
           
 <!--- Our tours row -->

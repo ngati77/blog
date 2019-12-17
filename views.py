@@ -22,7 +22,7 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    return render(request, 'blog/post_detail.html', {'post': post, 'page_title':post.title,'ShowComments':True})
 
 @login_required
 # The way to use this decorator is:
@@ -109,7 +109,7 @@ def post_remove(request, pk):
 
 def post_writers(request):
     posts = Post.objects.filter(published_date__isnull=False,type='w').order_by('created_date')
-    return render(request, 'blog/post_detail.html', {'post': posts[0],'page_title':'על הכותבים'})
+    return render(request, 'blog/post_detail.html', {'post': posts[0],'page_title':'על הכותבים','ShowComments':False})
 
     # return render(request, 'blog/post_list.html', {'posts': [posts[0],'page_title':'קצת עלינו'})
 
