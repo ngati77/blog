@@ -1,59 +1,81 @@
 {% load static %}
+<!--
 
-<div class="row">
+    <div class="row">
         <div class="title2" >
-בלוגים לפי נושאים
+            בלוגים לפי נושאים
         </div>
-  </div>
-  <div class="row ">
-      <hr class="light">
-  </div>
-  
+    </div>
+    <div class="row ">
+        <hr class="light">
+    </div>
+-->
+    
 <ul class="nav nav_blog flex-column flex-nowrap">
     {% if user.is_authenticated %}
+    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_list' %}">בלוגים אחרונים</a></li>
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_draft_list' %}">טיוטות</a></li>
     {% endif %}
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_writers' %}">על הכותבים</a></li>
-    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_list' %}">בלוגים אחרונים</a></li>
     {% for post in latest_posts %}
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_detail' pk=post.pk %}"><img width="20%" src="{{post.image.url}}"/> {{post.title}}</a></li>
     
     {% endfor %}
-    <li class="nav-item ">
-        <a class="nav-link side_nav_link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">טיולים בבריטניה</a>
-        <div class="collapse" id="submenu1" aria-expanded="false">
-                                <ul class="flex-column pl-2 nav">
-                                    <li class="nav-item"><a class="nav-link py-0" href="#">סקוטלנד</a></li>
-                                    <li class="nav-item">
-                                        <a class="nav-link side_nav_link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1">קיימברידג' והסביבה</a>
-                                        <div class="collapse" id="submenu1sub1" aria-expanded="false">
-                                            <ul class="flex-column nav pl-4">
-                                                <li class="nav-item">
-                                                    <a class="nav-link p-1" href="#">
-                                                        <i class="fa fa-fw fa-clock-o"></i> Daily
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link p-1" href="#">
-                                                        <i class="fa fa-fw fa-dashboard"></i> Dashboard
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link p-1" href="#">
-                                                        <i class="fa fa-fw fa-bar-chart"></i> Charts
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link p-1" href="#">
-                                                        <i class="fa fa-fw fa-compass"></i> Areas
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-        </div>
-    </li>
-    <li class="nav-item "><a class="nav-link" href="#">טיולים באירופה</a></li>
-    <li class="nav-item "><a class="nav-link" href="{% url 'blog:subscribed_view' %}">הרשמה לקבלת מייל</a></li>
+    <!-- 
+        
+        <li class="nav-item ">
+            <a class="nav-link side_nav_link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">טיולים בבריטניה</a>
+            <div class="collapse" id="submenu1" aria-expanded="false">
+                <ul class="flex-column pl-2 nav">
+                    <li class="nav-item"><a class="nav-link py-0" href="#">סקוטלנד</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link side_nav_link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1">קיימברידג' והסביבה</a>
+                        <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                            <ul class="flex-column nav pl-4">
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-clock-o"></i> Daily
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-bar-chart"></i> Charts
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-compass"></i> Areas
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    -->
+    <!--<li class="nav-item "><a class="nav-link" href="#">טיולים באירופה</a></li>-->
+    <!--<li class="nav-item "><a class="nav-link" href="#">הרשמה לקבלת מייל</a></li>-->
 </ul>
+<div class="row ">
+    <hr class="light">
+    <div class="col-sm-12 col-md-12 col-lg-10"> 
+        <div class="blog_name">
+            <p>
+                 הצטרפו לרשימת החברים האיכותית שלנו
+            </p>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="col-sm-12 col-md-12 col-lg-8"> 
+        <form method="POST" action = "{% url 'blog:subscribed_view' %}" >{% csrf_token %}
+        {{ subscribedForm.as_p }}
+        <button type="submit" class="save btn btn-blog">הרשמי</button>
+        </form>
+    </div>
+</div>

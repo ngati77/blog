@@ -10,14 +10,14 @@
    
 <!--- Jumbotron -->
     <div class="jumbotron row d-flex  justify-content-center text-right ">
-        <div class="col-sm-12 col-md-10 col-lg-3 runner">
+        <div class="col-sm-12 col-md-3 col-lg-3 runner">
      
                 {% include 'blog/blog_side_bar.html'  %}
             
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
         
-        <div class="col-sm-12 col-md-12 col-lg-8">
+        <div class="col-sm-12 col-md-8 col-lg-8">
         
             <div class="row main_text">
          
@@ -86,8 +86,15 @@
                     {% endif %}
 
                     <div class="row">
-                    {% if phrase.image.url is not null %}
-                        <div class="col-sm-12 col-md-6 col-lg-6">
+                        {% if phrase.image.url is not null %}
+                            {% if phrase.num_images == '1' %}
+                                <div class="col-sm-12 col-md-12 col-lg-8">
+                            {% elif phrase.num_images == '2' %}
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                            {% else %}
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                            {% endif %}
+                        
 
                             <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
                             data-image="{{phrase.image.url}}"
@@ -96,11 +103,22 @@
                                 src="{{phrase.image.url}}"
                                 alt="">
                             </a>
+                            {% if phrase.image_sub %}
+                                <div class="blog_subtext">
+                                    {{ phrase.image_sub |safe}}
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
 
                         {% if phrase.image2.url is not null %}
+                        {% if phrase.num_images == '1' %}
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                    {% elif phrase.num_images == '2' %}
                         <div class="col-sm-12 col-md-6 col-lg-6">
+                    {% else %}
+                        <div class="col-sm-12 col-md-4 col-lg-4">
+                    {% endif %}
                             <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
                         data-image="{{phrase.image2.url}}"
                         data-target="#image-post">
@@ -108,11 +126,22 @@
                             src="{{phrase.image2.url}}"
                             alt="">
                     </a>
+                    {% if phrase.image1_sub %}
+                    <div class="blog_subtext">
+                        {{ phrase.image1_sub}}
+                    </div>
+                {% endif %}
                     </div>
                     {% endif %}
 
                     {% if phrase.image3.url is not null %}
-                    <div class="col-sm-12 col-md-6 col-lg-6 ">
+                    {% if phrase.num_images == '1' %}
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                {% elif phrase.num_images == '2' %}
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                {% else %}
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                {% endif %}
                         <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
                     data-image="{{phrase.image3.url}}"
                     data-target="#image-post">
@@ -120,6 +149,11 @@
                         src="{{phrase.image3.url}}"
                         alt="">
                     </a>
+                    {% if phrase.image2_sub %}
+                    <div class="blog_subtext">
+                        {{ phrase.image2_sub}}
+                    </div>
+                {% endif %}
                     </div>
                   {% endif %}
                 </div>
@@ -133,7 +167,7 @@
             <hr>
             {% if ShowComments %}
             <div class="row main_text">
-                <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">הוסף תגובה</a>
+                <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">הוסף תגובה</a>
             {% for comment in post.comments.all %}
                 {% if user.is_authenticated or comment.approved_comment %}
                 <div class="col-12">

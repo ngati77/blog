@@ -38,10 +38,12 @@ class Phrase(models.Model):
     title           = models.CharField(max_length=200,blank = True, null = True)
     text1_html_style  = models.BooleanField(default=False)
     text1           = models.TextField(blank = True, null = True)
-    image_num       = models.IntegerField(default=1, blank=True, null=True)
     image           = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
+    image_sub       = models.CharField(max_length=200,blank = True, null = True)
     image2          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')
+    image2_sub      = models.CharField(max_length=200,blank = True, null = True)
     image3          = models.ImageField(blank = True, null = True, upload_to = 'Phrase/%Y/%m/')    
+    image3_sub      = models.CharField(max_length=200,blank = True, null = True)
     order           = models.IntegerField(default=0)
     
     class Meta:
@@ -52,6 +54,11 @@ class Phrase(models.Model):
             return (str(self.post) +  "-" + str(self.order))
         else:
             return (str(self.post) + "-" + self.title + "-" + str(self.order))
+    def num_images(self):
+        im1 = 1 if (self.image) else 0
+        im2 = 1 if (self.image2) else 0
+        im3 = 1 if (self.image3) else 0
+        return str(im1 + im2 + im3)
     
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
@@ -70,7 +77,6 @@ class Comment(models.Model):
 class Subscribed(models.Model):
 
     first_name       = models.CharField(max_length=200)
-    last_name        = models.CharField(max_length=200)
     email            = models.EmailField(blank=True, default="")
     
     def __str__(self):

@@ -126,13 +126,18 @@ def add_comment_to_post(request, pk):
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form})
 
+ 
+def subscribed_success(request):
+    return render(request, 'blog/subscribed_success.html',{'page_title':'הרישום הצליח'})
+
+
 def subscribed_view(request):
     if request.method == "POST":
         form = SubscribedForm(request.POST)
         if form.is_valid():
             subscribed = form.save(commit=False)
             subscribed.save()
-            return redirect('blog:post_list')
+            return redirect('blog:subscribed_success')
     else:
         form = SubscribedForm()
     return render(request, 'blog/subscribed.html', {'form': form})

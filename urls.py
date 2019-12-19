@@ -23,7 +23,8 @@ urlpatterns = [
     path('phrase/<int:pk>/edit/', views.phrase_edit, name='phrase_edit'),
     path('phrase/<int:pk>/new/', views.phrase_new, name='phrase_new'),
     
-    path('subscribed', views.subscribed_view, name='subscribed_view'),
+    path('subscribed/', views.subscribed_view, name='subscribed_view'),
+    path('subscribed_success/', views.subscribed_success, name='subscribed_success'),
 
 
 ]
