@@ -127,6 +127,14 @@
     font-weight: 900;
 
 }
+iframe { 
+
+    width:600px;
+    height:450px;
+}
+    
+    
+    
 @media (max-width: 768px) {
     .post_column{
         padding:0px;
@@ -139,4 +147,18 @@
     .post_img img{
         width:100%;
      }
+     iframe { 
+
+        width:400px!important;
+        height:300px!important;
+    }
+}
+@media (max-width: 576px) {
+
+    iframe { 
+
+        width:300px!important;
+        height:225px!important;
+    }
+        
 }
