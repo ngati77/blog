@@ -126,9 +126,9 @@
                             src="{{phrase.image2.url}}"
                             alt="">
                     </a>
-                    {% if phrase.image1_sub %}
+                    {% if phrase.image2_sub %}
                     <div class="blog_subtext">
-                        {{ phrase.image1_sub}}
+                        {{ phrase.image2_sub }}
                     </div>
                 {% endif %}
                     </div>
@@ -149,21 +149,22 @@
                         src="{{phrase.image3.url}}"
                         alt="">
                     </a>
-                    {% if phrase.image2_sub %}
+                    {% if phrase.image3_sub %}
                     <div class="blog_subtext">
-                        {{ phrase.image2_sub}}
+                        {{ phrase.image3_sub }}
                     </div>
                 {% endif %}
                     </div>
                   {% endif %}
                 </div>
+                <div class="pharse_space"></div>
                     
                 {% endfor %}
                 {% if user.is_authenticated %}
-
+                
                 <a class="btn btn-default" href="{% url 'blog:phrase_new' pk=post.pk %}"><i class="fas fa-edit"></i>הוסף פסקה חדשה</a>
                 {% endif %}
-
+                
             <hr>
             {% if ShowComments %}
             <div class="row main_text">

@@ -72,6 +72,16 @@
 .comment {
     margin: 20px 0px 20px 20px;
 }
+.pharse_space{
+    margin-bottom:  2rem;
+
+
+}
+
+h6 {
+    letter-spacing: 2px;
+    line-height: 1.4;
+  }
 .comment_space {
     padding-right: 5px;
     margin-right:  5px;
@@ -133,7 +143,12 @@ iframe {
     height:450px;
 }
     
-    
+
+
+.nav-link {
+
+    text-indent: -1em;
+}
     
 @media (max-width: 768px) {
     .post_column{
