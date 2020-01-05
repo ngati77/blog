@@ -1,5 +1,6 @@
 {% extends 'tour/base.html' %}
 {% load static %}
+{% load blog_extras %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
        <a href="{% url 'blog:post_edit' pk=post.pk %}" class="top-menu"><i class="fas fa-edit"></i></a>
@@ -52,8 +53,8 @@
                     </div>
 
 
-                    <div class="col-12"><p>
-                   {{ post.text |linebreaks |urlize}}</p>
+                    <div class="col-12">
+                   {{ post.text |blog_url_and_linebreaks }}
                     </div>
         
         
@@ -80,7 +81,7 @@
                         {% if phrase.text1_html_style is True %}
                             {{ phrase.text1 |safe}}
                         {% else %}
-                            {{ phrase.text1 |linebreaks |urlize }}
+                            {{ phrase.text1 |blog_url_and_linebreaks }}
                         {% endif %}
                     </div>
                     {% endif %}
@@ -180,7 +181,7 @@
                     <div class="comment_space">
 
                         <div class="date">{{ comment.created_date|date:"d.m.Y" }}</div>
-                        {{ comment.text|linebreaks|urlize }}
+                        {{ comment.text |blog_url_and_linebreaks }}
                     </div>
                 </div>
                 {% endif %}

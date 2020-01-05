@@ -1,5 +1,7 @@
 {% extends 'tour/base.html' %}
 {% load static %}
+{% load blog_extras %}
+
 {% block head %}
         <title>קיימברידג' בעברית הבלוג</title>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -52,7 +54,7 @@
                 {% endif %}
 
                 <div class="col-12">
-                {{ post.text |linebreaks |urlize }}
+                {{ post.text |blog_url_and_linebreaks }}
                 </div>
                 <!--
 
