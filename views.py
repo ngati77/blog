@@ -53,7 +53,8 @@ def phrase_new(request, pk):
             phrase.save()
             return redirect('blog:post_detail', pk=post.pk)
     else:
-        form = PhraseForm()
+        next_order = post.get_next_pharse_number()
+        form = PhraseForm(initial={'order': next_order})
     return render(request, 'blog/phrase_edit.html', {'form': form})
 
 @login_required

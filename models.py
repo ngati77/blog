@@ -31,6 +31,14 @@ class Post(models.Model):
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
     
+    def get_next_pharse_number(self):
+        queryPhrase = self.phrases.all().order_by('-order')
+        if queryPhrase.exists():
+            return (queryPhrase[0].order + 2)
+        else: 
+            return 0
+
+    
 
 class Phrase(models.Model):
     
