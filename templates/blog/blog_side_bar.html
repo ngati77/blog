@@ -12,7 +12,7 @@
 -->
     
 <ul class="nav nav_blog flex-column flex-nowrap">
-    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_list' %}">בלוגים אחרונים</a></li>
+    <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_list' %}">פוסטים אחרונים</a></li>
     {% if user.is_authenticated %}
     <li class="nav-item "><a class="nav-link" href="{% url 'blog:post_draft_list' %}">טיוטות</a></li>
     {% endif %}
