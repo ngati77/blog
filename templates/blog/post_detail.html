@@ -11,14 +11,14 @@
    
 <!--- Jumbotron -->
     <div class="jumbotron row d-flex  justify-content-center text-right ">
-        <div class="col-sm-12 col-md-3 col-lg-3 runner">
+        <div class="col-sm-12 col-md-3 col-lg-3 runner order-1 order-lg-0">
      
                 {% include 'blog/blog_side_bar.html'  %}
             
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
         
-        <div class="col-sm-12 col-md-8 col-lg-8">
+        <div class="col-sm-12 col-md-8 col-lg-8 order-0 order-lg-1">
         
             <div class="row main_text">
          
@@ -169,7 +169,7 @@
             <hr>
             {% if ShowComments %}
             <div class="row main_text">
-                <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">הוסף תגובה</a>
+                <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' pk=post.pk %}"> הוסף תגובה לכתבה</a>
             {% for comment in post.comments.all %}
                 {% if user.is_authenticated or comment.approved_comment %}
                 <div class="col-12">
@@ -184,6 +184,27 @@
                         {{ comment.text |blog_url_and_linebreaks }}
                     </div>
                 </div>
+                    {% for subComment in comment.subComments.all %}
+                        {% if user.is_authenticated or subComment.approved_comment %}
+
+                            <div class="col-12 subcomment">
+                                <strong>{{ subComment.author }}</strong>
+                                {% if not subComment.approved_comment %}
+                                    <a class="btn btn-default" href="{% url 'blog:comment_remove' pk=subComment.pk %}"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-default" href="{% url 'blog:comment_approve' pk=subComment.pk %}"><i class="fa fa-check"></i></a>
+                                {% endif %}
+                                    <div class="comment_space">
+    
+                                        <div class="date">{{ subComment.created_date|date:"d.m.Y" }}</div>
+                                        {{ subComment.text |blog_url_and_linebreaks }}
+                                    </div>
+                            </div>
+                        {% endif %}
+
+
+                    {% endfor %}
+                    <a class="btn deafult" href="{% url 'blog:add_comment_to_comment' PostPk=post.pk CommentPk=comment.pk %}">הגב</a>
+
                 {% endif %}
     
     

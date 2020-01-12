@@ -18,6 +18,11 @@
 .nav_blog{
     padding-right: 2px!important;
 }
+.nav_blog_index ul{
+    padding: .1px!important;
+    margin: .1px!important;
+    padding-inline-start:5px!important;
+}
 .content {
     margin-left: 40px;
 }
@@ -74,10 +79,10 @@
 }
 .pharse_space{
     margin-bottom:  2rem;
-
-
 }
-
+.subcomment{
+    margin: 10px 25px 10px 20px;
+}
 h6 {
     letter-spacing: 2px;
     line-height: 1.4;

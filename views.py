@@ -127,6 +127,23 @@ def add_comment_to_post(request, pk):
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form})
 
+def add_comment_to_comment(request, PostPk, CommentPk):
+    commentParent = get_object_or_404(Comment, pk=CommentPk)
+    #post = get_object_or_404(Post, pk=PostPk)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            print(f'Debug commentParent: {commentParent}')
+            comment.commentParent = commentParent
+            comment.save()
+            print(f'Debug comment: {comment.pk}')
+            print(f'Debug comment parent: {comment.commentParent}')
+            return redirect('blog:post_detail', pk=PostPk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to_post.html', {'form': form})
  
 def subscribed_success(request):
     return render(request, 'blog/subscribed_success.html',{'page_title':'הרישום הצליח'})
@@ -148,7 +165,11 @@ def subscribed_view(request):
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
-    return redirect('blog:post_detail', pk=comment.post.pk)
+    # If this is not null then it point to a post
+    if (comment.post):
+        return redirect('blog:post_detail', pk=comment.post.pk)
+    else:
+        return redirect('blog:post_detail', pk=comment.commentParent.post.pk)
 
 @login_required
 @group_required('blog_admin')

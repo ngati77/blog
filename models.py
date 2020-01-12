@@ -69,8 +69,12 @@ class Phrase(models.Model):
         return str(im1 + im2 + im3)
     
 class Comment(models.Model):
-    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
+    post    = models.ForeignKey('blog.Post', on_delete=models.CASCADE, blank=True, null=True, related_name='comments')
+    commentParent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='subComments')
+
     author = models.CharField(max_length=200)
+    email  = models.EmailField(blank=True, null=True, default="")
+
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
