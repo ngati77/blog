@@ -31,7 +31,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'author':   Textarea(attrs={'placeholder': 'שם','cols': 10, 'rows': 1}),
             'text':   Textarea(attrs={'placeholder': 'כיתבו כאן את הערה','cols': 40, 'rows': 5}),
-            'email':   Textarea(attrs={'placeholder': 'דוא"ל (לא חובה)- כדי שנוכל לשלוח לכם את תגובתנו ','cols': 40, 'rows': 5}),
+            'email':   Textarea(attrs={'placeholder': 'דואר אלקטרוני','cols': 40, 'rows': 5}),
         }
 
 

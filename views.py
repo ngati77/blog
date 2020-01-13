@@ -2,6 +2,11 @@ from django.shortcuts import render,  get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment, Phrase
 from .forms import PostForm, CommentForm, PhraseForm, SubscribedForm
+from tours.tour_emails import tour_emails
+from django.conf import settings
+from django.template.loader import render_to_string
+
+
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -114,6 +119,57 @@ def post_writers(request):
 
     # return render(request, 'blog/post_list.html', {'posts': [posts[0],'page_title':'קצת עלינו'})
 
+
+def inform_admin(title):
+    to=[settings.EMAIL_GMAIL_YAEL, settings.BCC_EMAIL]
+    
+    msg_html = render_to_string('emails/email_admin.html')
+    msg_plain =  "בדוק בלוג"
+    #emailTitle = " בדוק בלוג "
+    tour_emails.send_email(to=to,
+                            msg_html=msg_html, 
+                            msg_plain=msg_plain, 
+                            cc=[], 
+                            title=title)
+
+'''
+def send_email(task, obj):
+    to=[settings.EMAIL_GMAIL_YAEL]
+    if obj.email:
+        to.append(obj.email)
+    if task == 'Check':
+        msg_html = ""
+        msg_plain =  "בדוק בלוג"
+        emailTitle = " בדוק בלוג "
+        to=settings.BCC_EMAIL
+    if task=='New comment':
+        msg_html = render_to_string('emails/email_new_comment.html', {'comment':obj})
+        msg_plain = str(obj.id) + " הערה חדשה"
+        emailTitle = "תודה שכתבת לנו"
+    elif task = 'New Subscribed':
+        msg_html = render_to_string('emails/email_new_subscribed.html', {'comment':obj})
+        msg_plain = str(obj.id) + " משתמש חדש "
+        emailTitle = "תודה שנרשמת"
+    elif task = 'Published comment':
+        # A new comment has been published, inform the person who wrote it
+        if (obj.post):
+            msg_html = render_to_string('emails/email_comment_published.html', {'comment':obj})
+            msg_plain = str(obj.id) + "תגובה פורסמה "
+            emailTitle = "התגובה שלך פורסמה"
+
+
+        
+try:
+
+    tour_emails.send_email( to=[settings.EMAIL_GMAIL_YAEL],
+                                    msg_html=msg_html, 
+                                    msg_plain=msg_plain, 
+                                    cc=[], 
+                                    title=title)
+except:
+    print('Got an error...')
+'''
+
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -122,6 +178,7 @@ def add_comment_to_post(request, pk):
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
+            inform_admin('new post comment')
             return redirect('blog:post_detail', pk=post.pk)
     else:
         form = CommentForm()
@@ -135,17 +192,17 @@ def add_comment_to_comment(request, PostPk, CommentPk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            print(f'Debug commentParent: {commentParent}')
             comment.commentParent = commentParent
             comment.save()
-            print(f'Debug comment: {comment.pk}')
-            print(f'Debug comment parent: {comment.commentParent}')
+            inform_admin('new comment to comment')
+
             return redirect('blog:post_detail', pk=PostPk)
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form})
  
 def subscribed_success(request):
+    inform_admin('new subscribed')
     return render(request, 'blog/subscribed_success.html',{'page_title':'הרישום הצליח'})
 
 
