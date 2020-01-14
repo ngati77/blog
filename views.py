@@ -121,7 +121,7 @@ def post_writers(request):
 
 
 def inform_admin(title):
-    to=[settings.EMAIL_GMAIL_YAEL, settings.BCC_EMAIL]
+    to=[settings.EMAIL_GMAIL_YAEL]
     
     msg_html = render_to_string('emails/email_admin.html')
     msg_plain =  "בדוק בלוג"
@@ -129,7 +129,7 @@ def inform_admin(title):
     tour_emails.send_email(to=to,
                             msg_html=msg_html, 
                             msg_plain=msg_plain, 
-                            cc=[], 
+                            cc=settings.BCC_EMAIL, 
                             title=title)
 
 '''
