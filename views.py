@@ -22,12 +22,36 @@ def group_required(*group_names):
    return user_passes_test(in_groups)
 
 def post_list(request):
+    meta_des_heb = "קיימברידג בעברית בלוג טיולים "
+    meta_des_en  = "Cambridge in Hebrew the blog"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "קיימברידג' בלוג טיולים פוסט"
+    meta_key_en  = "cambridge hebrew blog post"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = 'האחרונים שלנו'
     posts = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('published_date')
-    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'האחרונים שלנו'})
+    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],
+                                                    'page_title':   title,
+                                                    'meta_des':     meta_des,
+                                                    'meta_key':     meta_key,
+                                                    'title':        title,
+                                                    })
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post, 'page_title':post.title,'ShowComments':True})
+    meta_des_heb = f"קיימברידג בעברית {post.title} "
+    meta_des_en  = "Cambridge in Hebrew post details"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = f"קיימברידג' בלוג טיולים פוסט {post.title}"
+    meta_key_en  = "cambridge hebrew post details"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = post.title
+    return render(request, 'blog/post_detail.html', {'post': post, 
+                                                    'page_title':   title,
+                                                    'meta_des':     meta_des,
+                                                    'meta_key':     meta_key,
+                                                    'title':        title,
+                                                    'ShowComments':True})
 
 @login_required
 # The way to use this decorator is:
@@ -96,7 +120,11 @@ def phrase_edit(request, pk):
 @group_required('blog_admin')
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],'page_title':'טיוטות'})
+    title = 'טיוטות'
+    return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],
+                                                   'page_title':    title,
+                                                    'title':        title,
+                                                   })
 
 
 @login_required
@@ -115,7 +143,19 @@ def post_remove(request, pk):
 
 def post_writers(request):
     posts = Post.objects.filter(published_date__isnull=False,type='w').order_by('created_date')
-    return render(request, 'blog/post_detail.html', {'post': posts[0],'page_title':'על הכותבים','ShowComments':False})
+    meta_des_heb = " על הכותבים"
+    meta_des_en  = "Cambridge in Hebrew pthe writers"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "קיימברידג' על הכותבים   "
+    meta_key_en  = "writers"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = 'על הכותבים'
+    return render(request, 'blog/post_detail.html', {'post': posts[0],
+                                                    'page_title':title,
+                                                    'meta_des':  meta_des,
+                                                    'meta_key':  meta_key,
+                                                    'title':     title,
+                                                    'ShowComments':False})
 
     # return render(request, 'blog/post_list.html', {'posts': [posts[0],'page_title':'קצת עלינו'})
 
@@ -172,6 +212,13 @@ except:
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    meta_des_heb = "הוסף הערה"
+    meta_des_en  = "Cambridge in Hebrew add comment"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "קיימברידג' הוסף תגובה"
+    meta_key_en  = "add comment"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = 'הוספת תגובה'
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -182,12 +229,23 @@ def add_comment_to_post(request, pk):
             return redirect('blog:post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    return render(request, 'blog/add_comment_to_post.html', {'form': form,
+                                                             'page_title':title,
+                                                             'meta_des':  meta_des,
+                                                             'meta_key':  meta_key,
+                                                             'title':     title,
+                                                                })
 
 def add_comment_to_comment(request, PostPk, CommentPk):
     commentParent = get_object_or_404(Comment, pk=CommentPk)
     #post = get_object_or_404(Post, pk=PostPk)
-
+    title        = 'הוספת תגובה'
+    meta_des_heb = "הוסף הערה"
+    meta_des_en  = "Cambridge in Hebrew add comment"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "קיימברידג' הוסף תגובה"
+    meta_key_en  = "add comment"
+    meta_key     = meta_key_heb + meta_key_en
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -199,14 +257,39 @@ def add_comment_to_comment(request, PostPk, CommentPk):
             return redirect('blog:post_detail', pk=PostPk)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    return render(request, 'blog/add_comment_to_post.html', {'form': form,
+                                                             'page_title':title,
+                                                             'meta_des':  meta_des,
+                                                             'meta_key':  meta_key,
+                                                             'title':     title,
+                                                              })
  
 def subscribed_success(request):
     inform_admin('new subscribed')
-    return render(request, 'blog/subscribed_success.html',{'page_title':'הרישום הצליח'})
+    meta_des_heb = "הרישום לרשימת התפוצה הצליח"
+    meta_des_en  = "Suscribed successfuky"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "הרישום הצליח"
+    meta_key_en  = "suscribe"
+    meta_key     = meta_key_heb + meta_key_en
+    title = "הרישום הצליח"
+
+    return render(request, 'blog/subscribed_success.html',{'page_title':title,
+                                                             'meta_des':  meta_des,
+                                                             'meta_key':  meta_key,
+                                                             'title':     title,
+    
+    })
 
 
 def subscribed_view(request):
+    meta_des_heb = "רישום לקבלת מיילים כשיוצא"
+    meta_des_en  = "suscribed "
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = "רישום למייל"
+    meta_key_en  = "add suscribed"
+    meta_key     = meta_key_heb + meta_key_en
+    title = "שלח מייל כשיוצא פוסט חדש"
     if request.method == "POST":
         form = SubscribedForm(request.POST)
         if form.is_valid():
@@ -215,7 +298,12 @@ def subscribed_view(request):
             return redirect('blog:subscribed_success')
     else:
         form = SubscribedForm()
-    return render(request, 'blog/subscribed.html', {'form': form})
+    return render(request, 'blog/subscribed.html', {'form': form,
+                                                    'page_title':title,
+                                                    'meta_des':  meta_des,
+                                                    'meta_key':  meta_key,
+                                                    'title':     title,
+    })
 
 @login_required
 @group_required('blog_admin')
