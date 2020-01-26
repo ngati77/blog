@@ -29,7 +29,7 @@ def post_list(request):
     meta_key_en  = "cambridge hebrew blog post"
     meta_key     = meta_key_heb + meta_key_en
     title        = 'האחרונים שלנו'
-    posts = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],
                                                     'page_title':   title,
                                                     'meta_des':     meta_des,

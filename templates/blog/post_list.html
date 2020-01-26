@@ -2,10 +2,6 @@
 {% load static %}
 {% load blog_extras %}
 
-{% block head %}
-        <title>קיימברידג' בעברית הבלוג</title>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    {% endblock %}
 {% block content %}
    
 <div class="container-fluid">
@@ -19,6 +15,7 @@
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
         <div class="col-sm-12 col-md-8 col-lg-8 post_main order-0 order-lg-1">
+
             <div class="col-12 blog_name">
                 <h1><a href="#">{{page_title}}</a></h1>
             </div>

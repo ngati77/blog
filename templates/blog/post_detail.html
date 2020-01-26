@@ -1,10 +1,7 @@
 {% extends 'tour/base.html' %}
 {% load static %}
 {% load blog_extras %}
-{% block head %}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-       <a href="{% url 'blog:post_edit' pk=post.pk %}" class="top-menu"><i class="fas fa-edit"></i></a>
-    {% endblock %}
+
 {% block content %}
           
 <div class="container-fluid">
@@ -18,46 +15,63 @@
         </div><!-- col-md-3 col-lg-4 disapear_sm runner -->
     
         
-        <div class="col-sm-12 col-md-8 col-lg-8 order-0 order-lg-1">
+        <div class="col-sm-12 col-md-8 col-lg-8 post_main order-0 order-lg-1">
         
             <div class="row main_text">
-         
+                <div class="col-sm-12 col-md-12 col-lg-8">
                       {% if user.is_authenticated %}
-                     <div class="col-12">
-                             <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><i class="fas fa-edit"></i></a>
-                             <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>
-                    </div>
+                    <!--
+                        
+                        <div class="col-12">
+                        -->
+                        <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>
+                        <!--
+                        </div>
+                    -->
                     {% endif %}
-                     <div class="col-12 blog_name">
-                    <h2>{{ post.title }}</h2>
-                    <hr>
+                    <div class="blog_name">
+                        <h2>{{ post.title }}</h2>
+                        <hr>
                     </div>
-                    <div class="col-12">
+                    <!--
+                        <div class="col-12">
+                        -->
                         {% if post.published_date %}
-                                   <div class="text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
-                                    {% else %}
-                           <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
-                           
-                           {% endif %}
-                    </div>
-
+                        <div class="text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                        {% else %}
+                        <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
+                        
+                        {% endif %}
+                        <!--
+                        </div>
+                    -->
+                    <!--
                         <div class="col-8"><p>
-                            
-                            <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
-                            data-image="{{post.image.url}}"
-                            data-target="#image-post">
-                            <img class="img-thumbnail"
-                            src="{{post.image.url}}"
-                            alt="">
-                        </a>
+                        -->
+                        
+                        <a class="phrase_img" href="#" data-image-id="" data-toggle="modal" data-title=""
+                        data-image="{{post.image.url}}"
+                        data-target="#image-post">
+                        <img class="img-thumbnail"
+                        src="{{post.image.url}}"
+                        alt="">
+                    </a>
+                    <!--
                     </div>
-
-
+                -->
+                
+                
+                <!--
                     <div class="col-12">
-                   {{ post.text |blog_url_and_linebreaks }}
+                    -->
+                    {{ post.text |blog_url_and_linebreaks }}
+                    <!--
                     </div>
+                -->
         
         
+                </div> <!-- "col-sm-12 col-md-12 col-lg-8"  -->     
             </div> <!-- "row main_text"  -->     
             
             
@@ -206,10 +220,6 @@
                     <a class="btn deafult" href="{% url 'blog:add_comment_to_comment' PostPk=post.pk CommentPk=comment.pk %}">הגב</a>
 
                 {% endif %}
-    
-    
-    {% empty %}
-        <p>אין תגובות</p>
     {% endfor %}
             </div>
             {% endif %}
