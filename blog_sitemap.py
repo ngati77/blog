@@ -38,5 +38,5 @@ class BlogsSitemap(Sitemap):
         return datetime.now()
     
     def location(self, obj):
-        return '/blog/post/' + str(obj.pk)  
+        return '/blog/' + str(obj.url)  
         
