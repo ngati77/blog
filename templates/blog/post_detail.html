@@ -183,7 +183,7 @@
             <hr>
             {% if ShowComments %}
             <div class="row main_text">
-                <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' pk=post.pk %}"> הוסף תגובה לכתבה</a>
+                <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' url=post.url %}"> הוסף תגובה לכתבה</a>
             {% for comment in post.comments.all %}
                 {% if user.is_authenticated or comment.approved_comment %}
                 <div class="col-12">
@@ -217,7 +217,7 @@
 
 
                     {% endfor %}
-                    <a class="btn deafult" href="{% url 'blog:add_comment_to_comment' PostPk=post.pk CommentPk=comment.pk %}">הגב</a>
+                    <a class="btn deafult" href="{% url 'blog:add_comment_to_comment' PostUrl=post.url CommentPk=comment.pk %}">הגב</a>
 
                 {% endif %}
     {% endfor %}
@@ -234,11 +234,5 @@
     </div><!-- jumbotron row  text-center .d-none .d-sm-block -->
 </div><!-- container-fluid -->
 <!--- Welcome Section -->
-
-    
-
-
-
-
 
 {% endblock %}

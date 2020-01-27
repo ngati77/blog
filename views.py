@@ -37,8 +37,8 @@ def post_list(request):
                                                     'title':        title,
                                                     })
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_detail(request, url):
+    post = get_object_or_404(Post, url=url)
     meta_des_heb = f"קיימברידג בעברית {post.title} "
     meta_des_en  = "Cambridge in Hebrew post details"
     meta_des = meta_des_heb + meta_des_en
@@ -64,7 +64,7 @@ def post_new(request):
             post.author = request.user
             #post.published_date = timezone.now()
             post.save()
-            return redirect('blog:post_detail', pk=post.pk)
+            return redirect('blog:post_detail', url=post.url)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -80,7 +80,7 @@ def phrase_new(request, pk):
             phrase = form.save(commit=False)
             phrase.post = post
             phrase.save()
-            return redirect('blog:post_detail', pk=post.pk)
+            return redirect('blog:post_detail', url=post.url)
     else:
         next_order = post.get_next_pharse_number()
         form = PhraseForm(initial={'order': next_order})
@@ -97,7 +97,7 @@ def post_edit(request, pk):
             post.author = request.user
             #post.published_date = timezone.now()
             post.save()
-            return redirect('blog:post_detail', pk=post.pk)
+            return redirect('blog:post_detail', url=post.url)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -111,7 +111,7 @@ def phrase_edit(request, pk):
         if form.is_valid():
             phrase = form.save(commit=False)
             phrase.save()
-            return redirect('blog:post_detail', pk=phrase.post.pk)
+            return redirect('blog:post_detail', url=phrase.post.url)
     else:
         form = PhraseForm(instance=phrase)
     return render(request, 'blog/phrase_edit.html', {'form': form})
@@ -132,7 +132,7 @@ def post_draft_list(request):
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
-    return redirect('blog:post_detail', pk=pk)
+    return redirect('blog:post_detail', url=post.url)
 
 @login_required
 @group_required('blog_admin')
@@ -210,8 +210,8 @@ except:
     print('Got an error...')
 '''
 
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def add_comment_to_post(request, url):
+    post = get_object_or_404(Post, url=url)
     meta_des_heb = "הוסף הערה"
     meta_des_en  = "Cambridge in Hebrew add comment"
     meta_des = meta_des_heb + meta_des_en
@@ -226,7 +226,7 @@ def add_comment_to_post(request, pk):
             comment.post = post
             comment.save()
             inform_admin('new post comment')
-            return redirect('blog:post_detail', pk=post.pk)
+            return redirect('blog:post_detail', url=post.url)
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form,
@@ -236,9 +236,9 @@ def add_comment_to_post(request, pk):
                                                              'title':     title,
                                                                 })
 
-def add_comment_to_comment(request, PostPk, CommentPk):
+def add_comment_to_comment(request, PostUrl, CommentPk):
     commentParent = get_object_or_404(Comment, pk=CommentPk)
-    #post = get_object_or_404(Post, pk=PostPk)
+    #post = get_object_or_404(Post, url=PostUrl)
     title        = 'הוספת תגובה'
     meta_des_heb = "הוסף הערה"
     meta_des_en  = "Cambridge in Hebrew add comment"
@@ -254,7 +254,7 @@ def add_comment_to_comment(request, PostPk, CommentPk):
             comment.save()
             inform_admin('new comment to comment')
 
-            return redirect('blog:post_detail', pk=PostPk)
+            return redirect('blog:post_detail', url=PostUrl)
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form,
@@ -312,13 +312,13 @@ def comment_approve(request, pk):
     comment.approve()
     # If this is not null then it point to a post
     if (comment.post):
-        return redirect('blog:post_detail', pk=comment.post.pk)
+        return redirect('blog:post_detail', url=comment.post.url)
     else:
-        return redirect('blog:post_detail', pk=comment.commentParent.post.pk)
+        return redirect('blog:post_detail', url=comment.commentParent.post.url)
 
 @login_required
 @group_required('blog_admin')
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
-    return redirect('blog:post_detail', pk=comment.post.pk)
+    return redirect('blog:post_detail', url=comment.post.url)

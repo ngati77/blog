@@ -33,7 +33,7 @@
                     <div class="row post_column">
 
                 <div class="col-12 blog_name text-right">
-                        <h3><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+                        <h3><a href="{% url 'blog:post_detail' url=post.url %}">{{ post.title }}</a></h3>
                     </div>
                     {% if post.published_date %}
                     <div class="col-12 text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
@@ -56,7 +56,7 @@
                 <!--
 
                     <div class="col-12">
-                        <a href="{% url 'blog:post_detail' pk=post.pk %}">מספר תגובות: {{ post.approved_comments.count }}</a>
+                        <a href="{% url 'blog:post_detail' url=post.url %}">מספר תגובות: {{ post.approved_comments.count }}</a>
                     </div>
                 -->
                     </div> <!-- "row post_column"  --> 
