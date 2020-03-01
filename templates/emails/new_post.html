@@ -10,8 +10,9 @@
             
          }
          .fram_border{
-            border:3px solid #070707;
-            padding:3px;
+            border:3px solid #070707!important;
+            
+            background:#f1f1f1;
             text-align:right;
 
          }
@@ -23,6 +24,8 @@
 
     <div class="col-12 frame_border" align="right">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
+        <br>    
+
         <h2 font color="blue">{{ post.title }}</font></h2>
         <br>    
             {{ post.text |blog_url_and_linebreaks }}
