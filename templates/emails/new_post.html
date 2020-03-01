@@ -11,15 +11,18 @@
 <div class="row" align="right">
 
     <div class="col-12 success" align="right">
-    <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
-   <h2>בלוג חדש יצא לאור</h2>  
-   <h2 font color="blue">{{ post.title }}</font></h2>
-                 
-      <img width=50% src="{{post.image.url}}">
-      {{ post.text |blog_url_and_linebreaks }}
+        <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
+        <h2>בלוג חדש יצא לאור</h2>  
+        <h2 font color="blue">{{ post.title }}</font></h2>
+        <div class="row">
 
-      <a href="www.cambrdigeinhebrew.com/blog/{{post.url}}">להמשך קריאה</p>
+            <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}">
+            {{ post.text |blog_url_and_linebreaks }}
+        </div>         
+
+        <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
     </div>
+</div>
 
 </body>
 </html>
