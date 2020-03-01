@@ -125,6 +125,26 @@ def post_draft_list(request):
                                                    'page_title':    title,
                                                     'title':        title,
                                                    })
+
+def send_email_thank_you(subscribed):
+    ''' New subscribed, sends email
+    '''
+    post = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('-published_date')[0]
+    title   = "תודה שנרשמתם"
+    msg_plain =  "בלוג חדש"
+
+    
+    to=[subscribed.email]
+    msg_html = render_to_string('emails/new_post.html',{'post':post, 'subscribed':subscribed })
+    print(msg_html)
+    #emailTitle = " בדוק בלוג "
+    tour_emails.send_email(to=to,
+                        msg_html=msg_html, 
+                        msg_plain=msg_plain, 
+                        cc=settings.BCC_EMAIL, 
+                        title=title)
+
+
 def send_new_publish_post(post):
     ''' Send email to subscribed list
     '''
@@ -147,7 +167,7 @@ def send_new_publish_post(post):
 @group_required('blog_admin')
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    #post.publish()
+    post.publish()
     send_new_publish_post(post)
     return redirect('blog:post_detail', url=post.url)
 
@@ -282,7 +302,6 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
                                                               })
  
 def subscribed_success(request):
-    inform_admin('new subscribed')
     meta_des_heb = "הרישום לרשימת התפוצה הצליח"
     meta_des_en  = "Suscribed successfuky"
     meta_des = meta_des_heb + meta_des_en
@@ -290,7 +309,7 @@ def subscribed_success(request):
     meta_key_en  = "suscribe"
     meta_key     = meta_key_heb + meta_key_en
     title = "הרישום הצליח"
-
+    
     return render(request, 'blog/subscribed_success.html',{'page_title':title,
                                                              'meta_des':  meta_des,
                                                              'meta_key':  meta_key,
@@ -312,6 +331,7 @@ def subscribed_view(request):
         if form.is_valid():
             subscribed = form.save(commit=False)
             subscribed.save()
+            send_email_thank_you(subscribed)
             return redirect('blog:subscribed_success')
     else:
         form = SubscribedForm()
