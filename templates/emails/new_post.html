@@ -8,16 +8,16 @@
 </head>
 <body>
 
-<div class="row" align="right">
+<div class="row" align="right" border="1">
 
     <div class="col-12 success" align="right">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
-        <h2>בלוג חדש יצא לאור</h2>  
         <h2 font color="blue">{{ post.title }}</font></h2>
         <div class="row">
-
-            <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}">
+        <br>    
             {{ post.text |blog_url_and_linebreaks }}
+        <br>        
+            <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}" border="5">
         </div>         
 
         <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
