@@ -1,6 +1,6 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment, Phrase
+from .models import Post, Comment, Phrase, Subscribed
 from .forms import PostForm, CommentForm, PhraseForm, SubscribedForm
 from tours.tour_emails import tour_emails
 from django.conf import settings
@@ -125,13 +125,30 @@ def post_draft_list(request):
                                                    'page_title':    title,
                                                     'title':        title,
                                                    })
+def send_new_publish_post(post):
+    ''' Send email to subscribed list
+    '''
+    subList = Subscribed.objects.filter(confirmed=True)
+    title   = "קיימברידג' בעברית - פוסט חדש"
+    msg_plain =  "בלוג חדש"
 
+    for subscribed in subList:
+        to=[subscribed.email]
+        msg_html = render_to_string('emails/new_post.html',{'post':post, 'subscribed':subscribed })
+        print(msg_html)
+    #emailTitle = " בדוק בלוג "
+        tour_emails.send_email(to=to,
+                            msg_html=msg_html, 
+                            msg_plain=msg_plain, 
+                            cc=settings.BCC_EMAIL, 
+                            title=title)
 
 @login_required
 @group_required('blog_admin')
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.publish()
+    #post.publish()
+    send_new_publish_post(post)
     return redirect('blog:post_detail', url=post.url)
 
 @login_required

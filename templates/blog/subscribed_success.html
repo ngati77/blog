@@ -1,9 +1,10 @@
 {% extends 'tour/base.html' %}
 {% load static %}
-{% block head %}
-        <title>קיימברידג' בעברית הבלוג</title>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    {% endblock %}
+
+fbq('track', 'Lead');
+{% block facebook_event %}
+        fbq('track', 'Lead');
+{% endblock %}
 {% block content %}
    
 <div class="container-fluid">

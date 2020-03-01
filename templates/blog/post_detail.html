@@ -2,6 +2,10 @@
 {% load static %}
 {% load blog_extras %}
 
+{% block facebook_event %}
+        fbq('track', 'ViewContent');
+{% endblock %}
+
 {% block content %}
           
 <div class="container-fluid">
