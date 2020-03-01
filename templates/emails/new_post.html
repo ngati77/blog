@@ -22,7 +22,7 @@
 <body>
 
     <div class="row">
-    <div class="col-sm-10 col-md-6 col-lg-3 frame_border" align="right">
+    <div class="col-sm-10 col-md-6 col-lg-3 frame_border" align="center">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
         <br>    
         <h2 font color="blue">{{ post.title }}</font></h2>
@@ -30,6 +30,7 @@
             {{ post.text |blog_url_and_linebreaks }}
         <br>        
         <img width=80% src="https://www.cambridgeinhebrew.com/{{post.image.url}}">
+        <br>
         <br>
         <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
     </div>
