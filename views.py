@@ -129,7 +129,7 @@ def send_new_publish_post(post):
     ''' Send email to subscribed list
     '''
     subList = Subscribed.objects.filter(confirmed=True)
-    title   = "קיימברידג' בעברית - פוסט חדש"
+    title   = post.text
     msg_plain =  "בלוג חדש"
 
     for subscribed in subList:
