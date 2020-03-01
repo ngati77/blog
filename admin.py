@@ -23,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
         '''
         for post in queryset:
             subList = Subscribed.objects.filter(confirmed=True)
-            title   = post.text
+            title   = post.title
             msg_plain =  "בלוג חדש"
 
             for subscribed in subList:

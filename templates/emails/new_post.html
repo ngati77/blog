@@ -10,8 +10,10 @@
             border:5px solid #021a40;
             background-color:#ff0;
          }
-         .border{
-            border:13px;
+         .fram_border{
+            border:3px;
+            padding:3px;
+            text-align:right;
 
          }
 
@@ -19,16 +21,16 @@
 </head>
 <body>
 
-<div class="row border" align="right">
+<div class="row frame_border">
 
-    <div class="col-12 success" align="right">
+    <div class="col-12">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
         <h2 font color="blue">{{ post.title }}</font></h2>
         <div class="row">
         <br>    
             {{ post.text |blog_url_and_linebreaks }}
         <br>        
-            <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}" border="5">
+            <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}">
         </div>         
 
         <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
