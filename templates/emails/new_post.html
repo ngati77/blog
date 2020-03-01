@@ -6,8 +6,7 @@
 <head>
     <style type="text/css">
         img {
-            padding:1px;
-            border:5px solid #9d9ea0;
+            border:2px solid #9d9ea0;
             
          }
          .fram_border{
@@ -22,15 +21,13 @@
 <body>
 
 
-    <div class="col-12 frame_border">
+    <div class="col-12 frame_border" align="right">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
         <h2 font color="blue">{{ post.title }}</font></h2>
-        <div class="row">
         <br>    
             {{ post.text |blog_url_and_linebreaks }}
         <br>        
             <img width=50% src="https://www.cambridgeinhebrew.com/{{post.image.url}}">
-        </div>         
 
         <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
     </div>
