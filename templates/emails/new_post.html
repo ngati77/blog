@@ -7,11 +7,11 @@
     <style type="text/css">
         img {
             padding:1px;
-            border:5px solid #021a40;
-            background-color:#ff0;
+            border:5px solid #9d9ea0;
+            
          }
          .fram_border{
-            border:3px;
+            border:3px solid #070707;
             padding:3px;
             text-align:right;
 
@@ -21,9 +21,8 @@
 </head>
 <body>
 
-<div class="row frame_border">
 
-    <div class="col-12">
+    <div class="col-12 frame_border">
         <h3><font color="blue">שלום {{subscribed.first_name}}</font></h3>
         <h2 font color="blue">{{ post.title }}</font></h2>
         <div class="row">
@@ -35,7 +34,6 @@
 
         <a href="www.cambridgeinhebrew.com/blog/{{post.url}}">להמשך קריאה</a>
     </div>
-</div>
 
 </body>
 </html>
