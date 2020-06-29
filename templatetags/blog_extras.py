@@ -25,10 +25,21 @@ def BlogCreateLink(text): # Only one argument.
     result = re.sub(pattern, replacement, text)
     return result
 
+@register.filter
+@stringfilter
+def BlogCreatefont(text): # Only one argument.
+    """Converts a string contains [[<url link>,<text>]] to hyperlink"""
+    # The pattern search for [%<tag>%]and create html tag to <tag> 
+    
+    pattern = '\[%(.*?)%\]'
+    replacement = r'<\1>'
+    result = re.sub(pattern, replacement, text)
+    return result
+
 @register.filter(needs_autoescape=True)
 def blog_url_and_linebreaks(text, autoescape=True):
     """ This functionwrap the linebreak and the new url, then call the safe function"""
-    return safe(BlogCreateLink(
+    return safe(BlogCreatefont(BlogCreateLink(
         linebreaksbr(text,
         autoescape=autoescape))
-    )
+    ))
