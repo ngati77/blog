@@ -202,6 +202,7 @@ def inform_admin(comment_to_post, comment):
     
     msg_html = render_to_string('emails/email_admin.html',{'comment_to_post':comment_to_post,'comment':comment})
     msg_plain =  "בדוק בלוג"
+    title     = 'תגובה חדשה'
     #emailTitle = " בדוק בלוג "
     tour_emails.send_email(to=to,
                             msg_html=msg_html, 
