@@ -43,9 +43,10 @@
                         -->
                         {% if post.published_date %}
                         <div class="text-right mb-2"><i><b>{{ post.published_date|date:"d.m.Y" }}</b></i></div>
+                        <!--
                         {% else %}
                         <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
-                        
+                    -->
                         {% endif %}
                         <!--
                         </div>
