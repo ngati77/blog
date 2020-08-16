@@ -197,10 +197,10 @@ def post_writers(request):
     # return render(request, 'blog/post_list.html', {'posts': [posts[0],'page_title':'קצת עלינו'})
 
 
-def inform_admin(title):
+def inform_admin(comment_to_post, comment):
     to=[settings.EMAIL_GMAIL_YAEL]
     
-    msg_html = render_to_string('emails/email_admin.html')
+    msg_html = render_to_string('emails/email_admin.html',{'comment_to_post':comment_to_post,'comment':comment})
     msg_plain =  "בדוק בלוג"
     #emailTitle = " בדוק בלוג "
     tour_emails.send_email(to=to,
@@ -262,7 +262,7 @@ def add_comment_to_post(request, url):
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
-            inform_admin('new post comment')
+            inform_admin(True,comment)
             return redirect('blog:post_detail', url=post.url)
     else:
         form = CommentForm()
@@ -289,7 +289,7 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
             comment = form.save(commit=False)
             comment.commentParent = commentParent
             comment.save()
-            inform_admin('new comment to comment')
+            inform_admin(False, comment)
 
             return redirect('blog:post_detail', url=PostUrl)
     else:
