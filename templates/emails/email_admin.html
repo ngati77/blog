@@ -11,16 +11,32 @@
     <p>שלום אהובה,</p>
     <div class="col-12 success" align="right">
     {% if comment_to_post %}
-        <p>תגובה לפוסט</p>
-
-    {% else %}
-    <p>תגובה לתגובה בפוסט</p>
-    {% endif %}
-    <p>{{ comment.post.title}}</p>
+        <p><u>תגובה לפוסט</u></p>
+        <p><u> כותרת פוסט</u></p>
+        <p>{{ comment.post.title }}</p>
     
-    <p>{{ comment.text}}</p>
+        <p><u> תגובה</u></p>
+        <p>{{ comment.text }}</p>
+        
+        <p><u>כותב</u></p>
+        <p>{{ comment.author }}</p>
+        
+        {% else %}
+        <p>תגובה לתגובה בפוסט</p>
+        <p><u> כותרת פוסט</u></p>
+        <p>{{ comment.commentParent.post.title }}</p>
+        <p><u> תגובה מקורית</u></p>
+        <p>{{ comment.commentParent.text }}</p>
+        <p><u> תגובה</u></p>
+        <p>{{ comment.text }}</p>
+
+         <p><u>כותב</u></p>
+        <p>{{ comment.author }}</p>
+       
+        {% endif %}
+    
     <hr>
-    <p>{{ comment.author}}</p>
+    
     <hr>
 
 
@@ -33,5 +49,3 @@
 
 </body>
 </html>
-
-comment_to_post,comment
