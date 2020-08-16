@@ -8,18 +8,30 @@
 
 <div class="row" align="right">
     
+    <p>שלום אהובה,</p>
     <div class="col-12 success" align="right">
-      <p>משוב או הודעה חדשה</p>
-     
-       <hr>
-      <p>הודעה</p>
-     <div calss="row"></div>
-      <div class="space"></div>
-      <p>בברכה</p>
-     <p>יעל גתי</p>
+    {% if comment_to_post %}
+        <p>תגובה לפוסט</p>
+
+    {% else %}
+    <p>תגובה לתגובה בפוסט</p>
+    {% endif %}
+    <p>{{ comment.post.title}}</p>
+    
+    <p>{{ comment.text}}</p>
+    <hr>
+    <p>{{ comment.author}}</p>
+    <hr>
+
+
+    
+    <p>שלך</p>
+     <p>נועם    </p>
       
     </div>
 </div>
 
 </body>
 </html>
+
+comment_to_post,comment
