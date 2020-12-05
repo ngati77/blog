@@ -5,6 +5,8 @@
 {% block head %}
         <title>קיימברידג' בעברית הבלוג</title>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        
     {% endblock %}
 {% block content %}
    
@@ -26,9 +28,12 @@
                 <h1><a href="{% url 'blog:post_new' %}" class="top-menu"><i class="fas fa-edit"></i>תגובה חדשה</a></h1>
             </div>
             <form method="POST" class="post-form">{% csrf_token %}
+                    
                 {{ form.as_p }}
+                
+                <div class="g-recaptcha" data-sitekey="{{ public_captcha }}"></div>
                 <button type="submit" class="btn btn-runner">שלח</button>
-                </form>
+            </form>
         
             </div> <!-- "row "  -->     
           </div>  <!-- col-sm-12 col-md-12 col-lg-8 -->             

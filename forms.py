@@ -10,6 +10,8 @@ from django.forms import ModelForm, Textarea
 
 from .models import Post, Comment, Phrase, Subscribed
 
+from captcha.fields import ReCaptchaField
+
 
 class PostForm(forms.ModelForm):
 
@@ -19,7 +21,7 @@ class PostForm(forms.ModelForm):
         
 
 class CommentForm(forms.ModelForm):
-
+    #captcha = ReCaptchaField(public_key=RECAPTCHA_PUBLIC_KEY, private_key=RECAPTCHA_PRIVATE_KEY)
     class Meta:
         model = Comment
         fields = ('author','email' ,'text')

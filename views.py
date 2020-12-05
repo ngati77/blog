@@ -6,7 +6,7 @@ from tours.tour_emails import tour_emails
 from django.conf import settings
 from django.template.loader import render_to_string
 
-
+from tours.decorators import check_recaptcha
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -136,7 +136,7 @@ def send_email_thank_you(subscribed):
     
     to=[subscribed.email]
     msg_html = render_to_string('emails/new_post.html',{'post':post, 'subscribed':subscribed })
-    print(msg_html)
+    #print(msg_html)
     #emailTitle = " בדוק בלוג "
     tour_emails.send_email(to=to,
                         msg_html=msg_html, 
@@ -155,7 +155,7 @@ def send_new_publish_post(post):
     for subscribed in subList:
         to=[subscribed.email]
         msg_html = render_to_string('emails/new_post.html',{'post':post, 'subscribed':subscribed })
-        print(msg_html)
+        #print(msg_html)
     #emailTitle = " בדוק בלוג "
         tour_emails.send_email(to=to,
                             msg_html=msg_html, 
@@ -248,6 +248,8 @@ except:
     print('Got an error...')
 '''
 
+
+@check_recaptcha
 def add_comment_to_post(request, url):
     post = get_object_or_404(Post, url=url)
     meta_des_heb = "הוסף הערה"
@@ -258,8 +260,10 @@ def add_comment_to_post(request, url):
     meta_key     = meta_key_heb + meta_key_en
     title        = 'הוספת תגובה'
     if request.method == "POST":
+
         form = CommentForm(request.POST)
         if form.is_valid():
+
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
@@ -272,11 +276,12 @@ def add_comment_to_post(request, url):
                                                              'meta_des':  meta_des,
                                                              'meta_key':  meta_key,
                                                              'title':     title,
+                                                             'title':     title,
+                                                             'public_captcha': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
                                                                 })
-
+@check_recaptcha
 def add_comment_to_comment(request, PostUrl, CommentPk):
     commentParent = get_object_or_404(Comment, pk=CommentPk)
-    #post = get_object_or_404(Post, url=PostUrl)
     title        = 'הוספת תגובה'
     meta_des_heb = "הוסף הערה"
     meta_des_en  = "Cambridge in Hebrew add comment"
@@ -287,6 +292,7 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
+
             comment = form.save(commit=False)
             comment.commentParent = commentParent
             comment.save()
@@ -300,6 +306,7 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
                                                              'meta_des':  meta_des,
                                                              'meta_key':  meta_key,
                                                              'title':     title,
+                                                             'public_captcha': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
                                                               })
  
 def subscribed_success(request):
