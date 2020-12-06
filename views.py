@@ -262,7 +262,7 @@ def add_comment_to_post(request, url):
     if request.method == "POST":
 
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
 
             comment = form.save(commit=False)
             comment.post = post
@@ -291,7 +291,7 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
     meta_key     = meta_key_heb + meta_key_en
     if request.method == "POST":
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
 
             comment = form.save(commit=False)
             comment.commentParent = commentParent
