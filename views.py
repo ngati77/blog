@@ -277,7 +277,7 @@ def add_comment_to_post(request, url):
                                                              'meta_key':  meta_key,
                                                              'title':     title,
                                                              'title':     title,
-                                                             'public_captcha': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
+                                                             'reCAPTCHA_site_key': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
                                                                 })
 @check_recaptcha
 def add_comment_to_comment(request, PostUrl, CommentPk):
@@ -306,7 +306,7 @@ def add_comment_to_comment(request, PostUrl, CommentPk):
                                                              'meta_des':  meta_des,
                                                              'meta_key':  meta_key,
                                                              'title':     title,
-                                                             'public_captcha': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
+                                                             'reCAPTCHA_site_key': settings.GOOGLE_RECAPTCHA_PUBLIC_KEY
                                                               })
  
 def subscribed_success(request):
