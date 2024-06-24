@@ -10,7 +10,7 @@ from django.forms import ModelForm, Textarea
 
 from .models import Post, Comment, Phrase, Subscribed
 
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 
 
 class PostForm(forms.ModelForm):
