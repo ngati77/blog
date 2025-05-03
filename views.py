@@ -325,7 +325,7 @@ def subscribed_success(request):
     
     })
 
-
+@check_recaptcha
 def subscribed_view(request):
     meta_des_heb = "רישום לקבלת מיילים כשיוצא"
     meta_des_en  = "suscribed "
