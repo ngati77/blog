@@ -334,6 +334,7 @@ def subscribed_view(request):
     meta_key_en  = "add suscribed"
     meta_key     = meta_key_heb + meta_key_en
     title = "שלח מייל כשיוצא פוסט חדש"
+    '''
     if request.method == "POST":
         form = SubscribedForm(request.POST)
         if form.is_valid():
@@ -343,6 +344,7 @@ def subscribed_view(request):
             return redirect('blog:subscribed_success')
     else:
         form = SubscribedForm()
+    '''
     return render(request, 'blog/subscribed.html', {'form': form,
                                                     'page_title':title,
                                                     'meta_des':  meta_des,
