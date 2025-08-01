@@ -48,12 +48,13 @@ def post_detail(request, url):
     meta_key_en  = "cambridge hebrew post details"
     meta_key     = meta_key_heb + meta_key_en
     title        = post.title
-    allow        = False
+
     #If you can only read this post if you blongs to a group
     if post.has_group:
+        return redirect('blog:secure_post_detail', url)
         # Check if user is login and is autorised to see the page
-        if not check_user_authorised(request.user,post.url):
-            return redirect('login')
+        #if not check_user_authorised(request.user,post.url):
+        #    return redirect('login')
    
     return render(request, 'blog/post_detail.html', {'post': post, 
                                                     'page_title':   title,
@@ -61,7 +62,49 @@ def post_detail(request, url):
                                                     'meta_key':     meta_key,
                                                     'title':        title,
                                                     'ShowComments':True})
-  
+
+
+@login_required
+def secure_post_detail(request, url):
+    post = get_object_or_404(Post, url=url)
+    meta_des_heb = f"קיימברידג בעברית {post.title} "
+    meta_des_en  = "Cambridge in Hebrew post details"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = f"קיימברידג' בלוג טיולים פוסט {post.title}"
+    meta_key_en  = "cambridge hebrew post details"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = post.title
+   
+    #If you can only read this post if you blongs to a group
+    #if post.has_group:
+        # Check if user is login and is autorised to see the page
+    if not check_user_authorised(request.user,post.url):
+        return redirect('blog:failure')
+   
+    return render(request, 'blog/post_detail.html', {'post': post, 
+                                                    'page_title':   title,
+                                                    'meta_des':     meta_des,
+                                                    'meta_key':     meta_key,
+                                                    'title':        title,
+                                                    'ShowComments':True})
+
+
+def failure(request):
+    print('DEBUG')
+    meta_des_heb = f"קיימברידג' בעברית לא הצלחת להתחבר"
+    meta_des_en  = "Cambridge in Hebrew fail to loggin"
+    meta_des = meta_des_heb + meta_des_en
+    meta_key_heb = f"קיימברידג' בעברית לא הצלחת להתחבר"
+    meta_key_en  = "Cambridge in Hebrew fail to loggin"
+    meta_key     = meta_key_heb + meta_key_en
+    title        = "user is not authorised"
+    return render(request, 'blog/failure.html', {
+                                                    'page_title':   title,
+                                                    'meta_des':     meta_des,
+                                                    'meta_key':     meta_key,
+                                                    'title':        title,
+                                                    })
+
 def check_user_authorised(user,group):
     today = date.today()
     if user.is_authenticated:
