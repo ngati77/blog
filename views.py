@@ -90,7 +90,6 @@ def secure_post_detail(request, url):
 
 
 def failure(request):
-    print('DEBUG')
     meta_des_heb = f"קיימברידג' בעברית לא הצלחת להתחבר"
     meta_des_en  = "Cambridge in Hebrew fail to loggin"
     meta_des = meta_des_heb + meta_des_en
