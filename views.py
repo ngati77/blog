@@ -9,6 +9,8 @@ from django.template.loader import render_to_string
 from tours.decorators import check_recaptcha
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+from datetime import date
+
 
 ''' Check if user has permition to edit blog'''
 def group_required(*group_names):
@@ -29,7 +31,7 @@ def post_list(request):
     meta_key_en  = "cambridge hebrew blog post"
     meta_key     = meta_key_heb + meta_key_en
     title        = 'האחרונים שלנו'
-    posts = Post.objects.filter(published_date__lte=timezone.now(),type='p').order_by('-published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now(),type='p',has_group=False).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': [posts[0::2], posts[1::2]],
                                                     'page_title':   title,
                                                     'meta_des':     meta_des,
@@ -46,13 +48,33 @@ def post_detail(request, url):
     meta_key_en  = "cambridge hebrew post details"
     meta_key     = meta_key_heb + meta_key_en
     title        = post.title
+    allow        = False
+    #If you can only read this post if you blongs to a group
+    if post.has_group:
+        # Check if user is login and is autorised to see the page
+        if not check_user_authorised(request.user,post.url):
+            return redirect('login')
+   
     return render(request, 'blog/post_detail.html', {'post': post, 
                                                     'page_title':   title,
                                                     'meta_des':     meta_des,
                                                     'meta_key':     meta_key,
                                                     'title':        title,
                                                     'ShowComments':True})
+  
+def check_user_authorised(user,group):
+    today = date.today()
+    if user.is_authenticated:
+        if user.is_superuser:
+            return True
+        if user.groups.filter(name=group).exists():
+                year,month,day = user.first_name.split('-')
+                last_date = date(int(year), int(month), int(day))
+                if today <= last_date:
+                    return True
 
+    return False
+  
 @login_required
 # The way to use this decorator is:
 @group_required('blog_admin')

@@ -21,9 +21,18 @@
             </div>
             <div class="row ">
                 {% if user.is_authenticated %}
+                {% for group in user.groups.all %}
+                {% if group.name == 'blog_admin' %}
+                  
                 <div class="col-12">
-                    <a class="btn btn-default" href="{% url 'blog:post_new' %}"><i class="far fa-plus-square"></i></a>
-                </div>
+                        <a class="btn btn-default" href="{% url 'blog:post_new' %}"><i class="far fa-plus-square"></i></a>
+                    </div>
+                {% endif %}
+                {% endfor %}
+
+
+
+
                 {% endif %}
            
                 {% for post_even_or_odd in posts %}

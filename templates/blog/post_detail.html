@@ -24,6 +24,11 @@
             <div class="row main_text">
                 <div class="col-sm-12 col-md-12 col-lg-8">
                       {% if user.is_authenticated %}
+
+                      {% for group in user.groups.all %}
+                          {% if group.name == 'blog_admin' %}
+                            
+
                     <!--
                         
                         <div class="col-12">
@@ -34,6 +39,9 @@
                         <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>
                         </div>
                     -->
+                    {% endif %}
+                    {% endfor %}
+
                     {% endif %}
                     <div class="blog_name">
                         <h2>{{ post.title }}</h2>
@@ -84,10 +92,18 @@
                 {% for phrase in post.phrases.all %}
 
                     {% if user.is_authenticated %}
-                        <div class="col-12">
-                        <a class="btn btn-default" href="{% url 'blog:phrase_edit' pk=phrase.pk %}"><i class="fas fa-edit"></i>ערוך פסקה תחתונה</a>
-                        <!--<a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>-->
+
+                    {% for group in user.groups.all %}
+                    {% if group.name == 'blog_admin' %}
+                      
+
+                    <div class="col-12">
+                            <a class="btn btn-default" href="{% url 'blog:phrase_edit' pk=phrase.pk %}"><i class="fas fa-edit"></i>ערוך פסקה תחתונה</a>
+                            <!--<a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><i class="fas fa-trash"></i></a>-->
                         </div>
+              {% endif %}
+              {% endfor %}
+                   
                     {% endif %}
                     {% if phrase.title %}
                     <div class="col-12 blog_name">
@@ -182,8 +198,16 @@
                     
                 {% endfor %}
                 {% if user.is_authenticated %}
-                
+
+                {% for group in user.groups.all %}
+                {% if group.name == 'blog_admin' %}
+                  
                 <a class="btn btn-default" href="{% url 'blog:phrase_new' pk=post.pk %}"><i class="fas fa-edit"></i>הוסף פסקה חדשה</a>
+
+                {% endif %}
+                {% endfor %}
+
+                
                 {% endif %}
                 
             <hr>
@@ -191,7 +215,8 @@
             <div class="row main_text">
                 <a class="btn btn-runner" href="{% url 'blog:add_comment_to_post' url=post.url %}"> הוסף תגובה לכתבה</a>
             {% for comment in post.comments.all %}
-                {% if user.is_authenticated or comment.approved_comment %}
+                {% if user.is_superuser or comment.approved_comment %}
+                
                 <div class="col-12">
                         <strong>{{ comment.author }}</strong>
                     {% if not comment.approved_comment %}
@@ -205,7 +230,7 @@
                     </div>
                 </div>
                     {% for subComment in comment.subComments.all %}
-                        {% if user.is_authenticated or subComment.approved_comment %}
+                        {% if user.is_superuser or subComment.approved_comment %}
 
                             <div class="col-12 subcomment">
                                 <strong>{{ subComment.author }}</strong>

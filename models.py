@@ -16,6 +16,7 @@ class Post(models.Model):
     created_date    = models.DateTimeField(default=timezone.now)
     image           = models.ImageField(blank = True, null = True, upload_to = 'Post/%Y/%m/')
     published_date  = models.DateTimeField(blank=True, null=True)
+    has_group      = models.BooleanField(default=False)
     type = models.CharField(
             max_length=1, 
             choices=POST_TYPE,
